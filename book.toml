@@ -1,0 +1,18 @@
+[book]
+title = "enseal"
+authors = ["Alex Fler"]
+language = "en"
+description = "Secure, ephemeral secret sharing for developers"
+src = "src"
+
+[build]
+build-dir = "book"
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "ayu"
+git-repository-url = "https://github.com/FlerAlex/enseal"
+edit-url-template = "https://github.com/FlerAlex/enseal_docs/edit/main/docs/src/{path}"
+site-url = "https://docsyard.com/"
+additional-css = ["theme/pagefind-ui.css"]
+additional-js = ["theme/pagefind-ui.js"]

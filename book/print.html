@@ -1,0 +1,2811 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>enseal</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Secure, ephemeral secret sharing for developers">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/pagefind-ui-80555027.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "ayu";
+            window.path_to_searchindex_js = "searchindex-d47e7ccc.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-4912c715.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">enseal</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/alexflerdev/enseal" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="enseal"><a class="header" href="#enseal">enseal</a></h1>
+<p>Secure, ephemeral secret sharing for developers.</p>
+<p>Stop pasting secrets into Slack. <code>enseal</code> makes the secure path faster than the insecure one – share <code>.env</code> files and secrets through encrypted, single-use channels with one command and zero setup.</p>
+<pre><code class="language-bash"># sender
+$ enseal share .env
+  Share code:  7-guitarist-revenge
+  Secrets:     14 variables (staging)
+  Expires:     5 minutes or first receive
+
+# recipient
+$ enseal receive 7-guitarist-revenge
+ok: 14 secrets written to .env
+</code></pre>
+<div id="search"></div>
+
+<h2 id="why-enseal"><a class="header" href="#why-enseal">Why enseal?</a></h2>
+<p>The most common way developers share secrets today is pasting them into Slack, email, or a text message. This is fast but leaves secrets permanently in chat history, email archives, and notification logs.</p>
+<p>enseal eliminates that anti-pattern by making the secure path <em>faster</em> than the insecure one:</p>
+<ul>
+<li><strong>One command to send, one command to receive</strong> – no accounts, no setup, no browser</li>
+<li><strong>Ephemeral by design</strong> – channels are single-use and time-limited</li>
+<li><strong>End-to-end encrypted</strong> – the relay never sees plaintext</li>
+<li><strong><code>.env</code> aware</strong> – parses, validates, filters, diffs, redacts, and encrypts <code>.env</code> files natively</li>
+</ul>
+<h2 id="the-relay-never-sees-your-secrets"><a class="header" href="#the-relay-never-sees-your-secrets">The relay never sees your secrets</a></h2>
+<p>enseal is end-to-end encrypted. The public relay server at <code>relay.enseal.dev</code> – and any self-hosted relay – is a stateless matchmaker that pairs sender and receiver over WebSocket. It never caches, stores, or logs the content of transfers.</p>
+<p>Here is why this is true by design, not by policy:</p>
+<ol>
+<li><strong>Encryption happens before the relay is contacted.</strong> The sender encrypts the payload locally using <code>age</code> before any network connection is made. The relay receives only ciphertext – an opaque blob it cannot decrypt because it never has the key.</li>
+<li><strong>No persistence layer.</strong> The relay has no database, no filesystem writes, no message queue. It holds paired WebSocket connections in memory and pipes bytes between them. When either side disconnects, the in-memory channel is dropped. There is nothing to retain.</li>
+<li><strong>Channels are single-use and time-limited.</strong> Each channel accepts exactly one transfer and expires after 5 minutes of inactivity. After the transfer completes or the timeout fires, the channel is removed from memory. There is no replay, no retrieval, no history.</li>
+<li><strong>The relay is open source.</strong> The server implementation is in <code>src/server/</code> – a single Rust module with no external state. Anyone can audit it or run their own with <code>enseal serve</code>.</li>
+</ol>
+<p>A compromised or malicious relay operator cannot read your secrets. They could refuse to relay traffic, but they cannot decrypt it.</p>
+<h2 id="two-sharing-modes"><a class="header" href="#two-sharing-modes">Two Sharing Modes</a></h2>
+<p><strong>Anonymous mode</strong> (default) – wormhole-based, zero setup. A human-readable code is all you need.</p>
+<pre><code class="language-bash">enseal share .env                         # generates code
+enseal receive 7-guitarist-revenge        # uses code
+</code></pre>
+<p><strong>Identity mode</strong> – public-key encryption for known teammates. Encrypt to a name, no codes needed.</p>
+<pre><code class="language-bash">enseal keys init                          # one-time setup
+enseal share .env --to sarah              # encrypt to sarah's public key
+</code></pre>
+<h2 id="complete-env-toolkit"><a class="header" href="#complete-env-toolkit">Complete .env Toolkit</a></h2>
+<p>Beyond sharing, enseal is a complete <code>.env</code> security toolkit:</p>
+<pre><code class="language-bash">enseal check                    # verify .env has all vars from .env.example
+enseal diff .env .env.staging   # compare two .env files (keys only)
+enseal redact .env              # strip values for safe sharing
+enseal validate .env            # check against schema rules
+enseal template .env            # generate .env.example with type hints
+enseal encrypt .env             # encrypt for safe git storage
+</code></pre>
+<h2 id="whats-next"><a class="header" href="#whats-next">What’s Next</a></h2>
+<ul>
+<li><a href="#installation">Installation</a> – get enseal running in under a minute</li>
+<li><a href="#quick-start">Quick Start</a> – share your first secret</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>There are several ways to install enseal depending on your platform and preferences.</p>
+<h2 id="from-cratesio"><a class="header" href="#from-cratesio">From crates.io</a></h2>
+<p>If you have a Rust toolchain installed, the simplest method is to install directly from crates.io:</p>
+<pre><code class="language-bash">cargo install enseal
+</code></pre>
+<p>This downloads, compiles, and installs the latest published release. The binary is placed in <code>~/.cargo/bin/</code>, which should already be in your <code>PATH</code> if Rust is set up correctly.</p>
+<h2 id="from-source"><a class="header" href="#from-source">From source</a></h2>
+<p>To build from the latest source code:</p>
+<pre><code class="language-bash">git clone https://github.com/FlerAlex/enseal.git
+cd enseal
+cargo build --release
+</code></pre>
+<p>The compiled binary will be at <code>target/release/enseal</code>. You can copy it to a directory on your <code>PATH</code>:</p>
+<pre><code class="language-bash">cp target/release/enseal /usr/local/bin/
+</code></pre>
+<p>Building from source requires Rust 1.70 or later. Install Rust via <a href="https://rustup.rs/">rustup</a> if you do not have it.</p>
+<h2 id="prebuilt-binaries"><a class="header" href="#prebuilt-binaries">Prebuilt binaries</a></h2>
+<p>Prebuilt binaries are available on the <a href="https://github.com/FlerAlex/enseal/releases">GitHub Releases</a> page for the following platforms:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Platform</th><th>Architecture</th><th>Archive</th></tr>
+</thead>
+<tbody>
+<tr><td>Linux</td><td>x86_64</td><td><code>enseal-x86_64-unknown-linux-musl.tar.gz</code></td></tr>
+<tr><td>Linux</td><td>aarch64</td><td><code>enseal-aarch64-unknown-linux-musl.tar.gz</code></td></tr>
+<tr><td>macOS (Intel)</td><td>x86_64</td><td><code>enseal-x86_64-apple-darwin.tar.gz</code></td></tr>
+<tr><td>macOS (Apple Silicon)</td><td>aarch64</td><td><code>enseal-aarch64-apple-darwin.tar.gz</code></td></tr>
+<tr><td>Windows</td><td>x86_64</td><td><code>enseal-x86_64-pc-windows-msvc.zip</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>Download the archive for your platform, extract it, and place the binary in a directory on your <code>PATH</code>.</p>
+<p><strong>Linux / macOS example:</strong></p>
+<pre><code class="language-bash"># Download (replace URL with the latest release)
+curl -LO https://github.com/FlerAlex/enseal/releases/latest/download/enseal-x86_64-unknown-linux-musl.tar.gz
+
+# Extract
+tar xzf enseal-x86_64-unknown-linux-musl.tar.gz
+
+# Move to PATH
+sudo mv enseal /usr/local/bin/
+</code></pre>
+<p><strong>Windows:</strong></p>
+<p>Extract the <code>.zip</code> archive and add the directory containing <code>enseal.exe</code> to your system <code>PATH</code>, or move the executable to a directory that is already on your <code>PATH</code>.</p>
+<h2 id="verifying-the-installation"><a class="header" href="#verifying-the-installation">Verifying the installation</a></h2>
+<p>After installing, confirm that enseal is available:</p>
+<pre><code class="language-bash">enseal --version
+</code></pre>
+<p>You should see output like:</p>
+<pre><code>enseal 0.6.0
+</code></pre>
+<p>If the command is not found, verify that the installation directory is on your <code>PATH</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h1>
+<p>This guide walks through the most common enseal workflows. All examples assume enseal is installed and available on your <code>PATH</code> (see <a href="#installation">Installation</a>).</p>
+<h2 id="sharing-a-env-file-anonymous-mode"><a class="header" href="#sharing-a-env-file-anonymous-mode">Sharing a .env file (anonymous mode)</a></h2>
+<p>Anonymous mode is the fastest way to share secrets. No keys, no accounts, no setup. The sender generates a wormhole code that the recipient enters to receive the file.</p>
+<p><strong>Both terminals must be open at the same time.</strong> The transfer is live – the sender waits until the recipient connects.</p>
+<p>On the sender’s machine:</p>
+<pre><code class="language-bash">enseal share .env
+</code></pre>
+<p>Output:</p>
+<pre><code>ok: wormhole code: 7-guitarist-revenge
+ok: waiting for receiver...
+</code></pre>
+<p>On the recipient’s machine:</p>
+<pre><code class="language-bash">enseal receive 7-guitarist-revenge
+</code></pre>
+<p>Output:</p>
+<pre><code>ok: 14 secrets written to .env
+</code></pre>
+<p>The sender and recipient authenticate each other through the wormhole code using SPAKE2. No one else can intercept the transfer, even on a public network.</p>
+<h2 id="sharing-a-single-secret"><a class="header" href="#sharing-a-single-secret">Sharing a single secret</a></h2>
+<p>You do not need a <code>.env</code> file to use enseal. Pipe any value through stdin:</p>
+<pre><code class="language-bash">echo "my-api-token" | enseal share --label "API key"
+</code></pre>
+<p>The <code>--label</code> flag attaches a human-readable description so the recipient knows what they are receiving. On the other end:</p>
+<pre><code class="language-bash">enseal receive 4-orbital-hammock
+</code></pre>
+<p>Output:</p>
+<pre><code>my-api-token
+</code></pre>
+<p>Raw string payloads print directly to stdout, so they work naturally with pipes and redirection:</p>
+<pre><code class="language-bash">enseal receive 4-orbital-hammock | pbcopy
+</code></pre>
+<h2 id="wrapping-a-secret-as-a-keyvalue-pair"><a class="header" href="#wrapping-a-secret-as-a-keyvalue-pair">Wrapping a secret as a KEY=VALUE pair</a></h2>
+<p>Use <code>--as</code> to wrap a raw value into <code>.env</code>-compatible <code>KEY=VALUE</code> format:</p>
+<pre><code class="language-bash">echo "sk_live_abc123" | enseal share --as STRIPE_KEY
+</code></pre>
+<p>The recipient gets:</p>
+<pre><code class="language-bash">enseal receive 9-pluto-carnival
+</code></pre>
+<p>Output:</p>
+<pre><code>STRIPE_KEY=sk_live_abc123
+</code></pre>
+<p>This output can be appended directly to an existing <code>.env</code> file:</p>
+<pre><code class="language-bash">enseal receive 9-pluto-carnival &gt;&gt; .env
+</code></pre>
+<h2 id="identity-mode"><a class="header" href="#identity-mode">Identity mode</a></h2>
+<p>Identity mode encrypts to a specific recipient’s public key and signs with the sender’s key. No wormhole code is needed – the recipient’s identity replaces the code. This is best for teams where members share public keys once and then transfer secrets without any per-transfer coordination.</p>
+<h3 id="one-time-setup"><a class="header" href="#one-time-setup">One-time setup</a></h3>
+<p>Each team member generates a keypair:</p>
+<pre><code class="language-bash">enseal keys init
+</code></pre>
+<p>Export your public key and share it with your teammates:</p>
+<pre><code class="language-bash">enseal keys export &gt; my-key.pub
+</code></pre>
+<p>Import a teammate’s public key:</p>
+<pre><code class="language-bash">enseal keys import teammate-key.pub
+</code></pre>
+<p>You will be prompted to verify the key fingerprint before trusting it:</p>
+<pre><code>  Identity:     sarah@company.com
+  Fingerprint:  SHA256:a1b2c3d4e5f6...
+  Trust this key? (y/N): y
+ok: imported sarah@company.com
+</code></pre>
+<p>Optionally, set up an alias for convenience:</p>
+<pre><code class="language-bash">enseal keys alias sarah sarah@company.com
+</code></pre>
+<h3 id="sending-with-identity-mode"><a class="header" href="#sending-with-identity-mode">Sending with identity mode</a></h3>
+<p>Once keys are exchanged, share directly to a recipient by name or alias:</p>
+<pre><code class="language-bash">enseal share .env --to sarah
+</code></pre>
+<p>The payload is encrypted to Sarah’s public key and signed with your key. Sarah receives it without needing a wormhole code:</p>
+<pre><code class="language-bash">enseal receive
+</code></pre>
+<p>The sender’s identity and signature are verified automatically before the payload is decrypted.</p>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next steps</a></h2>
+<ul>
+<li><a href="#anonymous-mode-wormhole">Anonymous Mode</a> – wormhole-based sharing in detail</li>
+<li><a href="#identity-mode-public-key">Identity Mode</a> – public-key encryption, relay push, and file drop</li>
+<li><a href="#inject-into-process">Inject into Process</a> – receive secrets directly into a child process without writing to disk</li>
+<li><a href="#check">Check</a> – verify your .env has all required variables</li>
+<li><a href="#running-a-relay">Self-Hosted Relay</a> – deploy your own relay server</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="anonymous-mode-wormhole"><a class="header" href="#anonymous-mode-wormhole">Anonymous Mode (Wormhole)</a></h1>
+<p>Anonymous mode is the default sharing mode in enseal. It requires no setup, no
+accounts, and no prior relationship between sender and recipient. A
+human-readable code is the only thing exchanged out of band.</p>
+<h2 id="how-it-works"><a class="header" href="#how-it-works">How It Works</a></h2>
+<ol>
+<li>The sender runs <code>enseal share</code> and a wormhole code is generated (format:
+<code>NNNN-word-word</code>, e.g. <code>7-guitarist-revenge</code>).</li>
+<li>The sender communicates this code to the recipient through any channel (chat,
+voice, in person).</li>
+<li>The recipient runs <code>enseal receive &lt;code&gt;</code>.</li>
+<li>Both sides perform a SPAKE2 key exchange through the relay server. This
+mutually authenticates both parties using the shared code as the password.</li>
+<li>The payload is encrypted with age and transferred through the relay.</li>
+<li>The relay sees only ciphertext and cannot decrypt the payload.</li>
+<li>The channel is destroyed after use. The code cannot be reused.</li>
+</ol>
+<p>The entire transfer is single-use and time-limited. By default, the channel
+expires after 5 minutes if the recipient does not connect.</p>
+<h2 id="sharing-a-env-file"><a class="header" href="#sharing-a-env-file">Sharing a .env File</a></h2>
+<p>The most common use case is sharing a <code>.env</code> file with a teammate:</p>
+<pre><code class="language-bash">$ enseal share .env
+ok: 14 secrets loaded from .env
+code: 7-guitarist-revenge
+waiting for recipient...
+</code></pre>
+<p>The sender sees the code and waits. The recipient enters the code:</p>
+<pre><code class="language-bash">$ enseal receive 7-guitarist-revenge
+ok: 14 secrets written to .env
+</code></pre>
+<p>If no file argument is given, enseal looks for <code>.env</code> in the current directory:</p>
+<pre><code class="language-bash">$ enseal share
+ok: 14 secrets loaded from .env
+code: 4-orbital-hammock
+waiting for recipient...
+</code></pre>
+<h2 id="sharing-piped-input"><a class="header" href="#sharing-piped-input">Sharing Piped Input</a></h2>
+<p>You can pipe content into enseal. This is useful for sending a single secret
+without exposing it in shell history:</p>
+<pre><code class="language-bash">$ pass show stripe/live-key | enseal share
+code: 9-pluto-carnival
+waiting for recipient...
+</code></pre>
+<p>The recipient gets the raw value printed to stdout, which can be piped further:</p>
+<pre><code class="language-bash">$ enseal receive 9-pluto-carnival
+sk_live_abc123def456
+
+$ enseal receive 9-pluto-carnival | pbcopy
+</code></pre>
+<p>You can also pipe multi-line <code>.env</code> content. enseal auto-detects the format:</p>
+<pre><code class="language-bash">$ cat staging-secrets.env | enseal share
+code: 3-anvil-bookshelf
+waiting for recipient...
+</code></pre>
+<h2 id="sharing-an-inline-secret"><a class="header" href="#sharing-an-inline-secret">Sharing an Inline Secret</a></h2>
+<p>The <code>--secret</code> flag sends a value directly from the command line:</p>
+<pre><code class="language-bash">$ enseal share --secret "sk_live_abc123def456"
+warning: --secret puts the value in shell history. Consider piping instead: echo "..." | enseal share
+code: 2-falcon-midnight
+waiting for recipient...
+</code></pre>
+<p>enseal warns about shell history exposure every time <code>--secret</code> is used. Prefer
+piping for sensitive values. Suppress the warning with <code>--quiet</code>.</p>
+<p>If the value contains <code>=</code>, enseal treats it as a KEY=VALUE pair:</p>
+<pre><code class="language-bash">$ enseal share --secret "STRIPE_KEY=sk_live_abc123"
+code: 5-hammer-dolphin
+waiting for recipient...
+</code></pre>
+<p>The recipient receives it in KEY=VALUE format, suitable for appending to a
+<code>.env</code> file:</p>
+<pre><code class="language-bash">$ enseal receive 5-hammer-dolphin
+STRIPE_KEY=sk_live_abc123
+
+$ enseal receive 5-hammer-dolphin &gt;&gt; .env
+</code></pre>
+<h2 id="labels-and-key-wrapping"><a class="header" href="#labels-and-key-wrapping">Labels and Key Wrapping</a></h2>
+<p>Add a human-readable label to give the recipient context:</p>
+<pre><code class="language-bash">$ pass show stripe/live-key | enseal share --label "Stripe production key"
+code: 8-castle-violin
+waiting for recipient...
+</code></pre>
+<p>The recipient sees the label:</p>
+<pre><code class="language-bash">$ enseal receive 8-castle-violin
+ok: received secret (label: "Stripe production key")
+sk_live_abc123def456
+</code></pre>
+<p>Wrap a raw value as a KEY=VALUE pair with <code>--as</code>:</p>
+<pre><code class="language-bash">$ echo -n "sk_live_abc123" | enseal share --as STRIPE_KEY
+code: 6-robot-lantern
+waiting for recipient...
+</code></pre>
+<p>The recipient gets <code>STRIPE_KEY=sk_live_abc123</code> instead of the bare value.</p>
+<h2 id="increasing-code-length"><a class="header" href="#increasing-code-length">Increasing Code Length</a></h2>
+<p>The default code uses 2 words (~22 bits of entropy). Combined with single-use
+channels and a 5-minute timeout, this is sufficient for most scenarios.</p>
+<p>For higher-security contexts, increase the word count with <code>--words</code>:</p>
+<pre><code class="language-bash">$ enseal share .env --words 4
+code: 7-guitarist-revenge-castle-violin
+waiting for recipient...
+</code></pre>
+<p>Valid range is 2 to 5 words.</p>
+<h2 id="filtering-variables"><a class="header" href="#filtering-variables">Filtering Variables</a></h2>
+<p>When sharing a <code>.env</code> file, you can filter which variables are sent:</p>
+<pre><code class="language-bash"># Exclude public variables that don't need to be secret
+$ enseal share .env --exclude "^PUBLIC_|^NEXT_PUBLIC_"
+
+# Send only database-related variables
+$ enseal share .env --include "^DB_|^DATABASE_"
+
+# Skip .env parsing entirely and send the raw file
+$ enseal share .env --no-filter
+</code></pre>
+<h2 id="security-properties"><a class="header" href="#security-properties">Security Properties</a></h2>
+<ul>
+<li><strong>No accounts or keys required.</strong> The wormhole code is the only credential.</li>
+<li><strong>Mutual authentication.</strong> SPAKE2 ensures both parties derived the same key
+from the code. A wrong code produces a clean failure, not a partial transfer.</li>
+<li><strong>End-to-end encryption.</strong> The relay server sees only ciphertext.</li>
+<li><strong>Single-use channels.</strong> A code cannot be reused after a successful transfer.</li>
+<li><strong>Time-limited.</strong> Channels expire after the configured timeout (default: 5
+minutes). Adjust with <code>--timeout</code>.</li>
+<li><strong>No persistent state.</strong> Nothing is stored on the relay after the transfer
+completes or the channel expires.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="identity-mode-public-key"><a class="header" href="#identity-mode-public-key">Identity Mode (Public Key)</a></h1>
+<p>Identity mode encrypts secrets to a specific recipient’s public key and signs
+them with the sender’s key. No wormhole code is needed once keys are exchanged.
+This mode is best for teams with established key trust and repeated sharing
+between known parties.</p>
+<p>Identity mode is triggered by the <code>--to</code> flag.</p>
+<h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
+<p>Each user generates a keypair once:</p>
+<pre><code class="language-bash">$ enseal keys init
+ok: keypair generated
+  age public key:     age1qyqszqgpqyqszqgpqyqszqgp...
+  ed25519 public key: ed25519:b64encodedpubkey...
+  fingerprint:        SHA256:a1b2c3d4e5f6...
+  stored in:          ~/.config/enseal/keys/
+</code></pre>
+<p>This creates two keypairs stored in <code>~/.config/enseal/keys/</code>:</p>
+<ul>
+<li>An <strong>age keypair</strong> for encryption and decryption.</li>
+<li>An <strong>ed25519 keypair</strong> for signing and signature verification.</li>
+</ul>
+<p>Export your public key to share with teammates:</p>
+<pre><code class="language-bash">$ enseal keys export &gt; myname.pub
+</code></pre>
+<p>Import a teammate’s public key:</p>
+<pre><code class="language-bash">$ enseal keys import alex.pub
+  Identity:     alex@company.com
+  Fingerprint:  SHA256:a1b2c3d4e5f6...
+  Trust this key? (y/N): y
+ok: imported alex@company.com
+</code></pre>
+<p>Verify fingerprints out of band (over a call, in person) before trusting a key.
+Skip the prompt with <code>--yes</code> for scripted workflows.</p>
+<h2 id="crypto-flow"><a class="header" href="#crypto-flow">Crypto Flow</a></h2>
+<p>When you share with <code>--to</code>, enseal performs the following steps:</p>
+<ol>
+<li>Loads the recipient’s age public key from the local trust store.</li>
+<li>Loads the sender’s ed25519 signing key.</li>
+<li>Encrypts the payload with age to the recipient’s public key.</li>
+<li>Signs the ciphertext with the sender’s ed25519 key.</li>
+<li>Bundles the ciphertext, signature, and sender public key into an envelope.</li>
+</ol>
+<p>On the receiving side:</p>
+<ol>
+<li>The recipient verifies the sender’s public key is in their trust store.</li>
+<li>The signature over the ciphertext is verified.</li>
+<li>The ciphertext is decrypted with the recipient’s age private key.</li>
+</ol>
+<p>This provides both confidentiality (only the recipient can decrypt) and
+authenticity (the recipient can verify who sent it).</p>
+<h2 id="transport-options"><a class="header" href="#transport-options">Transport Options</a></h2>
+<p>Identity mode supports three transport mechanisms. The choice depends on your
+flags.</p>
+<h3 id="wormhole-default"><a class="header" href="#wormhole-default">Wormhole (Default)</a></h3>
+<p>With just <code>--to</code> and no other transport flags, enseal uses a wormhole channel
+like anonymous mode, but the payload is additionally signed by the sender:</p>
+<pre><code class="language-bash"># Sender
+$ enseal share .env --to alex@company.com
+ok: encrypted to alex@company.com, signed by you
+code: 3-anvil-bookshelf
+waiting for recipient...
+
+# Recipient
+$ enseal receive 3-anvil-bookshelf
+ok: sender verified (alex@company.com, SHA256:a1b2c3d4...)
+ok: 14 secrets written to .env
+</code></pre>
+<p>The wormhole code provides the rendezvous mechanism. The signature provides
+sender authentication on top of the SPAKE2 channel.</p>
+<h3 id="relay-push"><a class="header" href="#relay-push">Relay Push</a></h3>
+<p>When combined with <code>--relay</code>, enseal pushes the encrypted payload to a
+deterministic channel on the relay server. No code exchange is needed – the
+recipient pulls from the same channel:</p>
+<pre><code class="language-bash"># Sender
+$ enseal share .env --to alex@company.com --relay wss://relay.internal:4443
+ok: encrypted to alex@company.com, signed by you
+ok: pushed to relay
+
+# Recipient
+$ enseal receive --relay wss://relay.internal:4443
+ok: sender verified (alex@company.com, SHA256:a1b2c3d4...)
+ok: 14 secrets written to .env
+</code></pre>
+<p>This is useful for automated workflows and CI/CD pipelines where exchanging a
+code is impractical.</p>
+<h3 id="file-drop"><a class="header" href="#file-drop">File Drop</a></h3>
+<p>With <code>--output</code>, enseal writes an encrypted file instead of using the network.
+See <a href="#file-drop-1">File Drop</a> for full details.</p>
+<pre><code class="language-bash">$ enseal share .env --to alex@company.com --output ./drop/
+ok: encrypted to alex@company.com, signed by you
+ok: written to ./drop/alex@company.com.env.age
+</code></pre>
+<h2 id="aliases"><a class="header" href="#aliases">Aliases</a></h2>
+<p>Typing full identities is tedious. Aliases map short names to identities:</p>
+<pre><code class="language-bash">$ enseal keys alias sarah sarah@company.com
+ok: alias sarah -&gt; sarah@company.com
+
+$ enseal share .env --to sarah
+ok: encrypted to sarah@company.com, signed by you
+code: 5-hammer-dolphin
+waiting for recipient...
+</code></pre>
+<p>List aliases:</p>
+<pre><code class="language-bash">$ enseal keys list
+  sarah  -&gt; sarah@company.com
+  alex   -&gt; alex@company.com
+  mike   -&gt; mike.chen@company.com
+</code></pre>
+<h2 id="groups"><a class="header" href="#groups">Groups</a></h2>
+<p>Groups let you share secrets with multiple recipients at once. Each group member
+receives their own encrypted copy (age multi-recipient encryption):</p>
+<pre><code class="language-bash"># Create a group
+$ enseal keys group create backend-team
+
+# Add members
+$ enseal keys group add backend-team sarah@company.com
+$ enseal keys group add backend-team alex@company.com
+$ enseal keys group add backend-team mike.chen@company.com
+
+# Share to the entire group
+$ enseal share .env --to backend-team
+ok: encrypted to 3 recipients (backend-team), signed by you
+code: 1-orbit-cascade
+waiting for recipient...
+</code></pre>
+<p>Any member of the group can receive the payload. List group members:</p>
+<pre><code class="language-bash">$ enseal keys group list backend-team
+  backend-team:
+    sarah@company.com
+    alex@company.com
+    mike.chen@company.com
+</code></pre>
+<h2 id="recipient-resolution"><a class="header" href="#recipient-resolution">Recipient Resolution</a></h2>
+<p>When you use <code>--to &lt;name&gt;</code>, enseal resolves the recipient in this order:</p>
+<ol>
+<li><strong>Alias</strong> – checks <code>~/.config/enseal/aliases.toml</code> for a matching nickname.</li>
+<li><strong>Group</strong> – checks <code>~/.config/enseal/groups.toml</code> for a matching group name.</li>
+<li><strong>Identity</strong> – uses the value directly as an identity string.</li>
+</ol>
+<p>If none match, enseal exits with an error suggesting how to import the key or
+create an alias.</p>
+<h2 id="security-properties-1"><a class="header" href="#security-properties-1">Security Properties</a></h2>
+<ul>
+<li><strong>Sender authentication.</strong> The recipient verifies the sender’s ed25519
+signature. Impersonation requires the sender’s private signing key.</li>
+<li><strong>Recipient confidentiality.</strong> Only the intended recipient (or group members)
+can decrypt the payload.</li>
+<li><strong>Relay sees only ciphertext.</strong> The relay server cannot read the payload
+regardless of transport.</li>
+<li><strong>No code required (relay push and file drop).</strong> Key-based authentication
+replaces the wormhole code, removing the need for out-of-band code exchange
+after initial key setup.</li>
+<li><strong>Trust-on-first-use model.</strong> enseal trusts keys you explicitly import. There
+is no certificate authority or key server. Verify fingerprints out of band.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="inject-into-process"><a class="header" href="#inject-into-process">Inject into Process</a></h1>
+<p>The <code>enseal inject</code> command receives secrets and passes them directly as
+environment variables to a child process. Secrets never touch the filesystem –
+they exist only in the process environment block in memory. When the child
+process exits, the secrets are gone.</p>
+<h2 id="basic-usage"><a class="header" href="#basic-usage">Basic Usage</a></h2>
+<p>The syntax is <code>enseal inject &lt;source&gt; -- &lt;command&gt;</code>. Everything after <code>--</code> is
+the command to run with the injected secrets.</p>
+<h3 id="from-a-wormhole-code"><a class="header" href="#from-a-wormhole-code">From a Wormhole Code</a></h3>
+<p>The most common usage: receive secrets via a wormhole code and inject them into
+a process:</p>
+<pre><code class="language-bash">$ enseal inject 7-guitarist-revenge -- npm start
+ok: 14 secrets injected into process
+[npm start output follows...]
+</code></pre>
+<p>The sender runs <code>enseal share .env</code> as usual. The recipient uses <code>inject</code>
+instead of <code>receive</code> to avoid writing secrets to disk.</p>
+<h3 id="from-a-relay-listen-mode"><a class="header" href="#from-a-relay-listen-mode">From a Relay (Listen Mode)</a></h3>
+<p>In listen mode, enseal waits for an incoming identity-mode transfer on the
+relay. This is useful for automated workflows where the recipient starts first:</p>
+<pre><code class="language-bash">$ enseal inject --listen --relay wss://relay.internal:4443 -- docker compose up
+waiting for secrets...
+ok: sender verified (alex@company.com)
+ok: 14 secrets injected into process
+[docker compose output follows...]
+</code></pre>
+<p>The sender pushes to the same relay:</p>
+<pre><code class="language-bash">$ enseal share .env --to deploy@company.com --relay wss://relay.internal:4443
+ok: encrypted and pushed to relay
+</code></pre>
+<h3 id="from-an-encrypted-file"><a class="header" href="#from-an-encrypted-file">From an Encrypted File</a></h3>
+<p>Inject secrets from a file drop (an <code>.env.age</code> file produced by identity mode
+with <code>--output</code>):</p>
+<pre><code class="language-bash">$ enseal inject ./staging.env.age -- python manage.py runserver
+ok: sender verified (alex@company.com)
+ok: 14 secrets injected into process
+[django output follows...]
+</code></pre>
+<p>This is useful when the encrypted file was transferred by other means (scp, USB,
+shared drive) and you want to use the secrets without decrypting to disk.</p>
+<h2 id="how-it-works-1"><a class="header" href="#how-it-works-1">How It Works</a></h2>
+<p>When <code>enseal inject</code> receives secrets, it:</p>
+<ol>
+<li>Receives and decrypts the payload (via wormhole, relay, or file).</li>
+<li>Parses the <code>.env</code> content into key-value pairs.</li>
+<li>Spawns the child process with the secrets merged into the current
+environment. Existing environment variables are preserved; secrets from the
+payload are added (or override existing values if keys conflict).</li>
+<li>Inherits stdin, stdout, and stderr so the child process behaves normally.</li>
+<li>Forwards signals (SIGINT, SIGTERM) to the child process for graceful
+shutdown.</li>
+<li>Waits for the child to exit and propagates the exit code.</li>
+</ol>
+<pre><code>enseal inject
+  |
+  +-- receive &amp; decrypt payload
+  |
+  +-- parse KEY=VALUE pairs
+  |
+  +-- spawn child process with secrets in env
+  |     |
+  |     +-- child runs with secrets in memory
+  |     |
+  |     +-- [SIGINT/SIGTERM forwarded]
+  |     |
+  |     +-- child exits
+  |
+  +-- exit with child's exit code
+</code></pre>
+<p>After the child process exits, the secrets exist nowhere on the system. They
+were never written to a file, a temp directory, or any persistent storage.</p>
+<h2 id="signal-forwarding"><a class="header" href="#signal-forwarding">Signal Forwarding</a></h2>
+<p>enseal forwards the following signals to the child process:</p>
+<ul>
+<li><strong>SIGINT</strong> (Ctrl+C) – the child receives the interrupt and can shut down
+gracefully.</li>
+<li><strong>SIGTERM</strong> – the child receives the termination signal.</li>
+</ul>
+<p>This means pressing Ctrl+C in a terminal running <code>enseal inject ... -- npm start</code> will correctly signal the Node.js process to shut down, not just kill
+enseal.</p>
+<h2 id="use-cases"><a class="header" href="#use-cases">Use Cases</a></h2>
+<h3 id="local-development"><a class="header" href="#local-development">Local Development</a></h3>
+<p>Start your development server with secrets from a teammate without writing a
+<code>.env</code> file:</p>
+<pre><code class="language-bash">$ enseal inject 7-guitarist-revenge -- cargo run
+</code></pre>
+<h3 id="cicd-pipelines"><a class="header" href="#cicd-pipelines">CI/CD Pipelines</a></h3>
+<p>Inject secrets into a build or deployment step. Secrets are never written to
+the CI runner’s filesystem:</p>
+<pre><code class="language-bash"># In a CI script
+$ enseal inject --listen --relay wss://relay.internal:4443 -- ./deploy.sh
+</code></pre>
+<p>A team member or automation system pushes the secrets to the relay before the
+CI job reaches this step.</p>
+<h3 id="containers"><a class="header" href="#containers">Containers</a></h3>
+<p>Run a container with injected secrets:</p>
+<pre><code class="language-bash">$ enseal inject 7-guitarist-revenge -- docker run --rm -e-stdin myapp
+</code></pre>
+<p>Or use inject inside a container entrypoint to receive secrets at startup.</p>
+<h3 id="one-off-commands"><a class="header" href="#one-off-commands">One-Off Commands</a></h3>
+<p>Run a single command that needs a secret, without persisting anything:</p>
+<pre><code class="language-bash">$ enseal inject 4-orbital-hammock -- psql "$DATABASE_URL"
+</code></pre>
+<h2 id="combining-with-other-flags"><a class="header" href="#combining-with-other-flags">Combining with Other Flags</a></h2>
+<p>Inject respects the same relay and timeout flags as other commands:</p>
+<pre><code class="language-bash"># Use a self-hosted relay with a longer timeout
+$ enseal inject --relay wss://relay.internal:4443 --timeout 600 \
+    7-guitarist-revenge -- npm start
+
+# Verbose mode shows variable names (never values)
+$ enseal inject -v 7-guitarist-revenge -- npm start
+ok: injecting 14 variables: DATABASE_URL, API_KEY, JWT_SECRET, ...
+</code></pre>
+<h2 id="security-properties-2"><a class="header" href="#security-properties-2">Security Properties</a></h2>
+<ul>
+<li><strong>No filesystem persistence.</strong> Secrets exist only in the child process
+environment block. No temp files, no intermediate storage.</li>
+<li><strong>Clean exit.</strong> When the child process exits, the secrets are gone from the
+system.</li>
+<li><strong>Signal forwarding.</strong> The child can shut down gracefully, avoiding orphaned
+processes.</li>
+<li><strong>Same encryption guarantees.</strong> The payload is protected by the same
+wormhole/age/ed25519 encryption as <code>enseal receive</code>.</li>
+<li><strong>Process isolation.</strong> Only the child process (and its descendants) have
+access to the injected secrets. Other processes on the system cannot read
+them unless they have privileges to inspect the child’s environment (e.g.,
+root access via /proc).</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="file-drop-1"><a class="header" href="#file-drop-1">File Drop</a></h1>
+<p>File drop produces an encrypted <code>.env.age</code> file instead of transferring secrets
+over the network. This is identity mode only – it requires both <code>--to</code> and
+<code>--output</code>. The resulting file can be transferred by any means you choose: scp,
+USB drive, email attachment, shared network drive, or any other method.</p>
+<p>File drop is ideal for air-gapped environments, offline transfers, or situations
+where both parties cannot be online simultaneously.</p>
+<h2 id="creating-a-file-drop"><a class="header" href="#creating-a-file-drop">Creating a File Drop</a></h2>
+<p>Specify a recipient with <code>--to</code> and an output directory with <code>--output</code>:</p>
+<pre><code class="language-bash">$ enseal share .env --to alex@company.com --output ./drop/
+ok: encrypted to alex@company.com, signed by you
+ok: written to ./drop/alex@company.com.env.age
+</code></pre>
+<p>The output filename is derived from the recipient identity. The file contains a
+signed envelope: the <code>.env</code> content encrypted with the recipient’s age public
+key and signed with the sender’s ed25519 key.</p>
+<p>You can also use aliases:</p>
+<pre><code class="language-bash">$ enseal share .env --to alex --output ./drop/
+ok: encrypted to alex@company.com, signed by you
+ok: written to ./drop/alex@company.com.env.age
+</code></pre>
+<p>And groups, which produce one file per member:</p>
+<pre><code class="language-bash">$ enseal share .env --to backend-team --output ./drop/
+ok: encrypted to 3 recipients (backend-team), signed by you
+ok: written to ./drop/sarah@company.com.env.age
+ok: written to ./drop/alex@company.com.env.age
+ok: written to ./drop/mike.chen@company.com.env.age
+</code></pre>
+<p>Each file is individually encrypted to that recipient’s key. Only the intended
+recipient can decrypt their file.</p>
+<h2 id="receiving-a-file-drop"><a class="header" href="#receiving-a-file-drop">Receiving a File Drop</a></h2>
+<p>The recipient uses <code>enseal receive</code> with the file path instead of a wormhole
+code:</p>
+<pre><code class="language-bash">$ enseal receive ./drop/alex@company.com.env.age
+ok: sender verified (sarah@company.com, SHA256:a1b2c3d4...)
+ok: 14 secrets written to .env
+</code></pre>
+<p>enseal detects that the argument is a file path (not a wormhole code), decrypts
+it with the recipient’s age private key, verifies the sender’s ed25519
+signature, and writes the <code>.env</code> file.</p>
+<p>Write to a specific output file:</p>
+<pre><code class="language-bash">$ enseal receive ./drop/alex@company.com.env.age --output staging.env
+ok: sender verified (sarah@company.com, SHA256:a1b2c3d4...)
+ok: 14 secrets written to staging.env
+</code></pre>
+<h2 id="injecting-from-a-file-drop"><a class="header" href="#injecting-from-a-file-drop">Injecting from a File Drop</a></h2>
+<p>Use <code>enseal inject</code> to load secrets from an encrypted file directly into a
+process without writing a plaintext <code>.env</code> to disk:</p>
+<pre><code class="language-bash">$ enseal inject ./staging.env.age -- python manage.py runserver
+ok: sender verified (sarah@company.com)
+ok: 14 secrets injected into process
+[django output follows...]
+</code></pre>
+<p>This combines the offline transfer benefits of file drop with the zero-disk
+security of inject mode.</p>
+<h2 id="envelope-contents"><a class="header" href="#envelope-contents">Envelope Contents</a></h2>
+<p>The <code>.env.age</code> file contains a structured envelope:</p>
+<ul>
+<li><strong>Ciphertext</strong>: the <code>.env</code> payload encrypted with age to the recipient’s
+public key.</li>
+<li><strong>Sender public key</strong>: the sender’s ed25519 public key, so the recipient can
+verify the signature.</li>
+<li><strong>Signature</strong>: an ed25519 signature over the ciphertext, proving the sender
+created this file.</li>
+<li><strong>Metadata</strong>: payload format, variable count, project name, timestamp, and
+content hash. No secret values appear in metadata.</li>
+</ul>
+<p>On receive, enseal:</p>
+<ol>
+<li>Extracts the sender’s public key from the envelope.</li>
+<li>Checks that the sender’s key is in the local trust store. If the key is
+unknown, enseal displays the fingerprint and asks whether to proceed.</li>
+<li>Verifies the ed25519 signature over the ciphertext. If the signature is
+invalid (file was tampered with), enseal rejects the file with a clear error.</li>
+<li>Decrypts the ciphertext with the recipient’s age private key.</li>
+<li>Writes the plaintext <code>.env</code> content to the output file (or injects into a
+process).</li>
+</ol>
+<h2 id="filtering-before-encryption"><a class="header" href="#filtering-before-encryption">Filtering Before Encryption</a></h2>
+<p>All standard filtering flags work with file drop:</p>
+<pre><code class="language-bash"># Exclude public variables
+$ enseal share .env --to alex --output ./drop/ --exclude "^NEXT_PUBLIC_"
+
+# Send only database secrets
+$ enseal share .env --to alex --output ./drop/ --include "^DB_|^DATABASE_"
+</code></pre>
+<h2 id="use-cases-1"><a class="header" href="#use-cases-1">Use Cases</a></h2>
+<h3 id="air-gapped-environments"><a class="header" href="#air-gapped-environments">Air-Gapped Environments</a></h3>
+<p>Transfer secrets to a machine with no network access:</p>
+<pre><code class="language-bash"># On the connected machine
+$ enseal share .env --to deploy@secure.internal --output /mnt/usb/
+
+# Physically move the USB drive
+
+# On the air-gapped machine
+$ enseal receive /mnt/usb/deploy@secure.internal.env.age
+ok: 14 secrets written to .env
+</code></pre>
+<h3 id="asynchronous-transfer"><a class="header" href="#asynchronous-transfer">Asynchronous Transfer</a></h3>
+<p>Sender and recipient do not need to be online at the same time. The sender
+creates the file and leaves it in a shared location:</p>
+<pre><code class="language-bash"># Sender creates the drop
+$ enseal share .env --to alex --output /shared/secrets/
+
+# Hours later, recipient picks it up
+$ enseal receive /shared/secrets/alex@company.com.env.age
+</code></pre>
+<h3 id="archiving-encrypted-secrets"><a class="header" href="#archiving-encrypted-secrets">Archiving Encrypted Secrets</a></h3>
+<p>File drops can serve as encrypted backups. Encrypt to yourself for safe storage:</p>
+<pre><code class="language-bash">$ enseal share .env --to self --output ./backups/
+ok: encrypted to you
+ok: written to ./backups/self.env.age
+</code></pre>
+<p>Restore later:</p>
+<pre><code class="language-bash">$ enseal receive ./backups/self.env.age --output .env
+</code></pre>
+<h2 id="security-properties-3"><a class="header" href="#security-properties-3">Security Properties</a></h2>
+<ul>
+<li><strong>End-to-end encryption.</strong> The file is encrypted with age. Only the intended
+recipient’s private key can decrypt it.</li>
+<li><strong>Sender authentication.</strong> The ed25519 signature proves who created the file.
+Tampering with the ciphertext invalidates the signature.</li>
+<li><strong>No network required.</strong> The file can be transferred through any channel. The
+encryption and signature protect the contents regardless of the transport
+mechanism.</li>
+<li><strong>No relay involvement.</strong> Unlike wormhole and relay push modes, file drop does
+not depend on any server infrastructure.</li>
+<li><strong>Tamper detection.</strong> If the file is modified in transit (bit flip, truncation,
+intentional modification), signature verification fails and enseal rejects the
+file.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="check"><a class="header" href="#check">Check</a></h1>
+<p><code>enseal check</code> verifies that your <code>.env</code> file contains all the variables defined in <code>.env.example</code>. This catches missing configuration before it causes runtime errors.</p>
+<h2 id="usage"><a class="header" href="#usage">Usage</a></h2>
+<pre><code class="language-bash">enseal check
+</code></pre>
+<p>By default, <code>enseal check</code> compares <code>.env</code> against <code>.env.example</code> in the current directory.</p>
+<h3 id="check-a-specific-file"><a class="header" href="#check-a-specific-file">Check a specific file</a></h3>
+<pre><code class="language-bash">enseal check staging.env
+</code></pre>
+<p>This compares <code>staging.env</code> against <code>.env.example</code>.</p>
+<h3 id="check-an-environment-profile"><a class="header" href="#check-an-environment-profile">Check an environment profile</a></h3>
+<pre><code class="language-bash">enseal check --env production
+</code></pre>
+<p>This resolves to <code>.env.production</code> and checks it against <code>.env.example</code>.</p>
+<h2 id="example-output"><a class="header" href="#example-output">Example output</a></h2>
+<p>When variables are missing from your <code>.env</code>:</p>
+<pre><code>$ enseal check
+error: missing variable: DATABASE_URL
+error: missing variable: JWT_SECRET
+error: missing variable: REDIS_URL
+ok: 11/14 variables present
+</code></pre>
+<p>When all variables are present:</p>
+<pre><code>$ enseal check
+ok: 14/14 variables present
+</code></pre>
+<h2 id="schema-aware-checking"><a class="header" href="#schema-aware-checking">Schema-aware checking</a></h2>
+<p>If an <code>.enseal.toml</code> file with a <code>[schema]</code> section is present in the project, <code>enseal check</code> also runs schema validation in addition to the <code>.env.example</code> comparison. This includes checking required variables, type constraints, and pattern rules. See <a href="#validate">Validate</a> for details on schema configuration.</p>
+<h2 id="exit-codes"><a class="header" href="#exit-codes">Exit codes</a></h2>
+<p><code>enseal check</code> returns a non-zero exit code when variables are missing. This makes it suitable for use in CI pipelines and pre-deploy scripts:</p>
+<pre><code class="language-bash"># In a CI pipeline
+enseal check || exit 1
+
+# As a pre-deploy gate
+enseal check --env production &amp;&amp; deploy.sh
+</code></pre>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Exit code</th><th>Meaning</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>All variables present</td></tr>
+<tr><td>1</td><td>One or more variables missing</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="typical-workflow"><a class="header" href="#typical-workflow">Typical workflow</a></h2>
+<ol>
+<li>Maintain a <code>.env.example</code> in version control with all required variable names.</li>
+<li>Run <code>enseal check</code> locally or in CI to catch missing configuration early.</li>
+<li>When a teammate adds a new variable, <code>enseal check</code> immediately flags it for everyone else.</li>
+</ol>
+<pre><code class="language-bash"># Developer pulls latest changes
+git pull
+
+# Check catches the new variable added by a teammate
+$ enseal check
+error: missing variable: STRIPE_WEBHOOK_SECRET
+ok: 13/14 variables present
+
+# Developer adds the missing variable and re-checks
+$ enseal check
+ok: 14/14 variables present
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="diff"><a class="header" href="#diff">Diff</a></h1>
+<p><code>enseal diff</code> compares two <code>.env</code> files and reports which variables are missing or extra between them. It shows only key names, never values, so the output is safe to share, paste in a pull request, or log in CI.</p>
+<h2 id="usage-1"><a class="header" href="#usage-1">Usage</a></h2>
+<pre><code class="language-bash">enseal diff &lt;file1&gt; &lt;file2&gt;
+</code></pre>
+<h3 id="compare-two-environment-files"><a class="header" href="#compare-two-environment-files">Compare two environment files</a></h3>
+<pre><code class="language-bash">enseal diff .env.development .env.staging
+</code></pre>
+<h3 id="compare-environment-profiles"><a class="header" href="#compare-environment-profiles">Compare environment profiles</a></h3>
+<pre><code class="language-bash">enseal diff --env development staging
+</code></pre>
+<p>This resolves to <code>.env.development</code> and <code>.env.staging</code> in the current directory.</p>
+<h2 id="example-output-1"><a class="header" href="#example-output-1">Example output</a></h2>
+<pre><code>$ enseal diff .env.development .env.staging
+- DEBUG                   (in .env.development only)
+- MOCK_PAYMENTS           (in .env.development only)
++ REDIS_CLUSTER_URL       (in .env.staging only)
++ SENTRY_DSN              (in .env.staging only)
++ CDN_BASE_URL            (in .env.staging only)
+
+3 extra in .env.staging, 2 missing from .env.staging
+</code></pre>
+<p>Variables prefixed with <code>-</code> exist in the first file but not the second. Variables prefixed with <code>+</code> exist in the second file but not the first. Variables present in both files are not shown.</p>
+<p>When the files have identical keys:</p>
+<pre><code>$ enseal diff .env.development .env.staging
+ok: both files have the same 14 variables
+</code></pre>
+<h2 id="safety"><a class="header" href="#safety">Safety</a></h2>
+<p><code>enseal diff</code> never displays variable values. Only key names appear in the output. This means you can safely:</p>
+<ul>
+<li>Paste diff output into a Slack channel or pull request comment.</li>
+<li>Include it in CI logs.</li>
+<li>Share it with teammates who should not see production secrets.</li>
+</ul>
+<p>If you need to see the actual values, open the files directly. enseal will not do it for you.</p>
+<h2 id="use-cases-2"><a class="header" href="#use-cases-2">Use cases</a></h2>
+<h3 id="comparing-environments"><a class="header" href="#comparing-environments">Comparing environments</a></h3>
+<p>Before deploying to staging, verify it has the same configuration shape as production:</p>
+<pre><code class="language-bash">enseal diff .env.staging .env.production
+</code></pre>
+<h3 id="reviewing-changes"><a class="header" href="#reviewing-changes">Reviewing changes</a></h3>
+<p>After updating a <code>.env</code> file, compare it against the previous version or the example:</p>
+<pre><code class="language-bash">enseal diff .env .env.example
+</code></pre>
+<h3 id="ci-drift-detection"><a class="header" href="#ci-drift-detection">CI drift detection</a></h3>
+<p>Add a diff check to your pipeline to catch environment configuration drift between environments:</p>
+<pre><code class="language-bash">enseal diff .env.staging .env.production
+if [ $? -ne 0 ]; then
+  echo "warning: staging and production environments have diverged"
+fi
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="redact"><a class="header" href="#redact">Redact</a></h1>
+<p><code>enseal redact</code> replaces all values in a <code>.env</code> file with <code>&lt;REDACTED&gt;</code>, preserving the file structure. This produces a safe version of your configuration that shows which variables exist without exposing any secret values.</p>
+<h2 id="usage-2"><a class="header" href="#usage-2">Usage</a></h2>
+<pre><code class="language-bash">enseal redact &lt;file&gt;
+</code></pre>
+<h3 id="redact-to-stdout"><a class="header" href="#redact-to-stdout">Redact to stdout</a></h3>
+<pre><code class="language-bash">enseal redact .env
+</code></pre>
+<p>Output is printed to stdout by default.</p>
+<h3 id="redact-to-a-file"><a class="header" href="#redact-to-a-file">Redact to a file</a></h3>
+<pre><code class="language-bash">enseal redact .env --output .env.redacted
+</code></pre>
+<h2 id="example"><a class="header" href="#example">Example</a></h2>
+<p>Given this <code>.env</code> file:</p>
+<pre><code class="language-env"># Database configuration
+DATABASE_URL=postgres://admin:s3cret@db.internal:5432/myapp
+DB_POOL_SIZE=10
+
+# External services
+STRIPE_API_KEY=sk_live_abc123def456ghi789
+STRIPE_WEBHOOK_SECRET=whsec_xyz987
+
+# Application settings
+PORT=3000
+LOG_LEVEL=info
+DEBUG=false
+</code></pre>
+<p>Running <code>enseal redact .env</code> produces:</p>
+<pre><code class="language-env"># Database configuration
+DATABASE_URL=&lt;REDACTED&gt;
+DB_POOL_SIZE=&lt;REDACTED&gt;
+
+# External services
+STRIPE_API_KEY=&lt;REDACTED&gt;
+STRIPE_WEBHOOK_SECRET=&lt;REDACTED&gt;
+
+# Application settings
+PORT=&lt;REDACTED&gt;
+LOG_LEVEL=&lt;REDACTED&gt;
+DEBUG=&lt;REDACTED&gt;
+</code></pre>
+<p>Comments, blank lines, and key ordering are preserved exactly as they appear in the original file. Only the values are replaced.</p>
+<h2 id="use-cases-3"><a class="header" href="#use-cases-3">Use cases</a></h2>
+<h3 id="sharing-env-structure"><a class="header" href="#sharing-env-structure">Sharing .env structure</a></h3>
+<p>When onboarding a new teammate or filing a bug report, you may need to show which variables your project uses without revealing their values:</p>
+<pre><code class="language-bash">enseal redact .env | pbcopy
+</code></pre>
+<p>Paste the result into a ticket, wiki page, or chat message.</p>
+<h3 id="documentation"><a class="header" href="#documentation">Documentation</a></h3>
+<p>Generate a redacted snapshot of your configuration for internal documentation:</p>
+<pre><code class="language-bash">enseal redact .env --output docs/env-reference.txt
+</code></pre>
+<h3 id="debugging"><a class="header" href="#debugging">Debugging</a></h3>
+<p>When asking for help with a configuration issue, share the redacted output so others can see the structure without the secrets:</p>
+<pre><code class="language-bash">$ enseal redact .env
+# The person helping you can see which vars are set
+# without seeing actual credentials
+</code></pre>
+<h2 id="redact-vs-template"><a class="header" href="#redact-vs-template">Redact vs Template</a></h2>
+<p>Both <code>redact</code> and <a href="#template"><code>template</code></a> produce safe versions of a <code>.env</code> file, but they serve different purposes:</p>
+<ul>
+<li><strong>redact</strong> replaces every value with <code>&lt;REDACTED&gt;</code>. It is a direct, mechanical transformation of the original file. Best for showing the exact structure of an existing <code>.env</code>.</li>
+<li><strong>template</strong> generates descriptive placeholders like <code>&lt;postgres connection string&gt;</code> or <code>&lt;integer, 1024-65535&gt;</code>. It produces a <code>.env.example</code> that helps developers understand what each variable expects. Best for onboarding documentation.</li>
+</ul>
+<p>If you want a file that tells developers what to put in each variable, use <code>template</code>. If you just need to strip the secrets out, use <code>redact</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="validate"><a class="header" href="#validate">Validate</a></h1>
+<p><code>enseal validate</code> checks a <code>.env</code> file against schema rules defined in <code>.enseal.toml</code>. This catches type errors, missing required variables, invalid formats, and out-of-range values before they cause runtime failures.</p>
+<h2 id="usage-3"><a class="header" href="#usage-3">Usage</a></h2>
+<pre><code class="language-bash">enseal validate &lt;file&gt;
+</code></pre>
+<h3 id="validate-the-default-env"><a class="header" href="#validate-the-default-env">Validate the default .env</a></h3>
+<pre><code class="language-bash">enseal validate .env
+</code></pre>
+<h3 id="validate-an-environment-profile"><a class="header" href="#validate-an-environment-profile">Validate an environment profile</a></h3>
+<pre><code class="language-bash">enseal validate --env production
+</code></pre>
+<p>This resolves to <code>.env.production</code> in the current directory.</p>
+<h2 id="defining-a-schema"><a class="header" href="#defining-a-schema">Defining a schema</a></h2>
+<p>Schema rules are defined in <code>.enseal.toml</code> at the root of your project:</p>
+<pre><code class="language-toml">[schema]
+required = ["DATABASE_URL", "API_KEY", "JWT_SECRET", "PORT"]
+
+[schema.rules.DATABASE_URL]
+pattern = "^postgres://"
+description = "PostgreSQL connection string"
+
+[schema.rules.API_KEY]
+min_length = 32
+description = "API key from the admin dashboard"
+
+[schema.rules.JWT_SECRET]
+min_length = 16
+description = "Secret for signing JSON Web Tokens"
+
+[schema.rules.PORT]
+type = "integer"
+range = [1024, 65535]
+
+[schema.rules.DEBUG]
+type = "boolean"
+
+[schema.rules.LOG_LEVEL]
+enum = ["debug", "info", "warn", "error"]
+
+[schema.rules.ADMIN_EMAIL]
+type = "email"
+
+[schema.rules.CALLBACK_URL]
+type = "url"
+pattern = "^https://"
+description = "OAuth callback URL (must be HTTPS)"
+</code></pre>
+<h2 id="supported-rule-types"><a class="header" href="#supported-rule-types">Supported rule types</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Description</th><th>Example</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code></td><td>Value type. One of: <code>string</code> (default), <code>integer</code>, <code>boolean</code>, <code>url</code>, <code>email</code></td><td><code>type = "integer"</code></td></tr>
+<tr><td><code>pattern</code></td><td>Regex the value must match</td><td><code>pattern = "^postgres://"</code></td></tr>
+<tr><td><code>min_length</code></td><td>Minimum character length</td><td><code>min_length = 32</code></td></tr>
+<tr><td><code>max_length</code></td><td>Maximum character length</td><td><code>max_length = 256</code></td></tr>
+<tr><td><code>range</code></td><td>Allowed range for integer types, as <code>[min, max]</code></td><td><code>range = [1024, 65535]</code></td></tr>
+<tr><td><code>enum</code></td><td>List of allowed values</td><td><code>enum = ["debug", "info", "warn", "error"]</code></td></tr>
+<tr><td><code>description</code></td><td>Human-readable description (used by <code>enseal template</code>)</td><td><code>description = "PostgreSQL connection string"</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>The <code>required</code> array at the top level lists variables that must be present. Any variable not in the <code>required</code> list is optional – it will only be validated if it exists in the <code>.env</code> file.</p>
+<h2 id="example-output-2"><a class="header" href="#example-output-2">Example output</a></h2>
+<pre><code>$ enseal validate .env
+error: missing required: JWT_SECRET
+error: DATABASE_URL doesn't match pattern ^postgres://
+error: PORT value "abc" is not an integer
+error: LOG_LEVEL value "verbose" is not one of: debug, info, warn, error
+error: API_KEY length 12 is below minimum 32
+ok: 9/14 variables passed validation
+</code></pre>
+<p>When all rules pass:</p>
+<pre><code>$ enseal validate .env
+ok: 14/14 variables passed validation
+</code></pre>
+<h2 id="automatic-validation-on-receive"><a class="header" href="#automatic-validation-on-receive">Automatic validation on receive</a></h2>
+<p>When you receive a <code>.env</code> file with <code>enseal receive</code> or <code>enseal inject</code>, validation runs automatically if an <code>.enseal.toml</code> schema is present in the current directory. Validation failures are reported as warnings but do not block the transfer:</p>
+<pre><code>$ enseal receive 7-guitarist-revenge
+warning: received .env has validation issues:
+  missing required: JWT_SECRET
+  PORT value "abc" is not an integer
+ok: 14 secrets written to .env
+</code></pre>
+<p>This helps catch configuration problems immediately rather than discovering them at runtime.</p>
+<h2 id="exit-codes-1"><a class="header" href="#exit-codes-1">Exit codes</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Exit code</th><th>Meaning</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>All validation rules passed</td></tr>
+<tr><td>1</td><td>One or more validation errors</td></tr>
+</tbody>
+</table>
+</div>
+<p>Use in CI to enforce schema compliance:</p>
+<pre><code class="language-bash">enseal validate .env --env production || exit 1
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="template"><a class="header" href="#template">Template</a></h1>
+<p><code>enseal template</code> generates a <code>.env.example</code> file from a real <code>.env</code> file. Instead of exposing actual values, it produces descriptive placeholders that tell developers what each variable expects. This is safer and more informative than a plain <a href="#redact">redact</a>.</p>
+<h2 id="usage-4"><a class="header" href="#usage-4">Usage</a></h2>
+<pre><code class="language-bash">enseal template &lt;file&gt;
+</code></pre>
+<h3 id="generate-to-stdout"><a class="header" href="#generate-to-stdout">Generate to stdout</a></h3>
+<pre><code class="language-bash">enseal template .env
+</code></pre>
+<h3 id="generate-to-a-file"><a class="header" href="#generate-to-a-file">Generate to a file</a></h3>
+<pre><code class="language-bash">enseal template .env --output .env.example
+</code></pre>
+<h2 id="example-1"><a class="header" href="#example-1">Example</a></h2>
+<p>Given this <code>.env</code> file:</p>
+<pre><code class="language-env"># Database
+DATABASE_URL=postgres://admin:s3cret@db.internal:5432/myapp
+DB_POOL_SIZE=10
+
+# External services
+STRIPE_API_KEY=sk_live_4eC39HqLyjWDarjtT1zdp7dc
+SENDGRID_API_KEY=SG.abc123def456.xyz789
+
+# Application
+PORT=3000
+DEBUG=false
+LOG_LEVEL=info
+ADMIN_EMAIL=admin@example.com
+APP_URL=https://myapp.example.com
+SESSION_SECRET=a7f3b9c1d4e8f2a6
+</code></pre>
+<p>Running <code>enseal template .env</code> produces:</p>
+<pre><code class="language-env"># Database
+DATABASE_URL=&lt;postgres connection string&gt;
+DB_POOL_SIZE=&lt;integer&gt;
+
+# External services
+STRIPE_API_KEY=&lt;32+ character string&gt;
+SENDGRID_API_KEY=&lt;32+ character string&gt;
+
+# Application
+PORT=&lt;integer&gt;
+DEBUG=&lt;boolean&gt;
+LOG_LEVEL=&lt;string&gt;
+ADMIN_EMAIL=&lt;email address&gt;
+APP_URL=&lt;url&gt;
+SESSION_SECRET=&lt;16+ character string&gt;
+</code></pre>
+<p>Comments and blank lines from the original file are preserved in the output.</p>
+<h2 id="type-inference"><a class="header" href="#type-inference">Type inference</a></h2>
+<p>When no <code>.enseal.toml</code> schema is present, <code>enseal template</code> infers types from the actual values:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Detected pattern</th><th>Placeholder</th></tr>
+</thead>
+<tbody>
+<tr><td><code>true</code>, <code>false</code>, <code>0</code>, <code>1</code>, <code>yes</code>, <code>no</code></td><td><code>&lt;boolean&gt;</code></td></tr>
+<tr><td>Numeric digits only</td><td><code>&lt;integer&gt;</code></td></tr>
+<tr><td>Starts with <code>http://</code> or <code>https://</code></td><td><code>&lt;url&gt;</code></td></tr>
+<tr><td>Contains <code>@</code> and <code>.</code> (email-like)</td><td><code>&lt;email address&gt;</code></td></tr>
+<tr><td>Starts with <code>postgres://</code>, <code>mysql://</code>, etc.</td><td><code>&lt;postgres connection string&gt;</code>, <code>&lt;mysql connection string&gt;</code>, etc.</td></tr>
+<tr><td>32+ characters</td><td><code>&lt;32+ character string&gt;</code></td></tr>
+<tr><td>16+ characters</td><td><code>&lt;16+ character string&gt;</code></td></tr>
+<tr><td>Everything else</td><td><code>&lt;string&gt;</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="schema-aware-descriptions"><a class="header" href="#schema-aware-descriptions">Schema-aware descriptions</a></h2>
+<p>If an <code>.enseal.toml</code> schema exists with <code>description</code> fields, those descriptions are used instead of inferred types:</p>
+<pre><code class="language-toml"># .enseal.toml
+[schema.rules.DATABASE_URL]
+pattern = "^postgres://"
+description = "PostgreSQL connection string"
+
+[schema.rules.PORT]
+type = "integer"
+range = [1024, 65535]
+
+[schema.rules.LOG_LEVEL]
+enum = ["debug", "info", "warn", "error"]
+</code></pre>
+<p>With this schema, <code>enseal template .env</code> produces more specific placeholders:</p>
+<pre><code class="language-env">DATABASE_URL=&lt;PostgreSQL connection string&gt;
+PORT=&lt;integer, 1024-65535&gt;
+LOG_LEVEL=&lt;one of: debug, info, warn, error&gt;
+</code></pre>
+<p>Schema descriptions always take precedence over inferred types.</p>
+<h2 id="template-vs-redact"><a class="header" href="#template-vs-redact">Template vs Redact</a></h2>
+<p>Both commands produce safe versions of <code>.env</code> files. The key difference:</p>
+<ul>
+<li><strong>template</strong> generates helpful placeholders that describe what each variable expects. Best for <code>.env.example</code> files committed to version control.</li>
+<li><strong>redact</strong> replaces every value with a uniform <code>&lt;REDACTED&gt;</code>. Best for quick sharing of <code>.env</code> structure without any interpretation.</li>
+</ul>
+<p>Use <code>template</code> when the goal is to help someone fill in a new <code>.env</code> from scratch. Use <code>redact</code> when you just need to strip secrets from an existing file.</p>
+<h2 id="typical-workflow-1"><a class="header" href="#typical-workflow-1">Typical workflow</a></h2>
+<ol>
+<li>Write your <code>.env</code> with real values during development.</li>
+<li>Run <code>enseal template .env --output .env.example</code> to generate the example file.</li>
+<li>Commit <code>.env.example</code> to version control.</li>
+<li>When variables change, regenerate the template.</li>
+</ol>
+<pre><code class="language-bash"># After adding new variables to .env
+enseal template .env --output .env.example
+git add .env.example
+git commit -m "update .env.example with new variables"
+</code></pre>
+<p>New developers clone the repo, copy <code>.env.example</code> to <code>.env</code>, and fill in the values guided by the descriptive placeholders.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="at-rest-encryption"><a class="header" href="#at-rest-encryption">At-Rest Encryption</a></h1>
+<p>enseal can encrypt <code>.env</code> files for safe storage on disk or in version control. This uses the same <code>age</code> encryption library and keys used by identity mode, so there is no additional setup if you already have keys.</p>
+<h2 id="quick-start-1"><a class="header" href="#quick-start-1">Quick Start</a></h2>
+<p>Encrypt a file:</p>
+<pre><code class="language-bash">enseal encrypt .env
+# ok: encrypted to .env.encrypted
+</code></pre>
+<p>Decrypt it back:</p>
+<pre><code class="language-bash">enseal decrypt .env.encrypted
+# ok: decrypted to .env
+</code></pre>
+<p>The encrypted output is a standard <code>age</code>-formatted file. Any tool that understands the age format can decrypt it, given the correct key.</p>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<p>You need an enseal keypair. If you have not created one yet:</p>
+<pre><code class="language-bash">enseal keys init
+# ok: keypair written to ~/.config/enseal/keys/
+</code></pre>
+<p>By default, <code>enseal encrypt</code> encrypts to your own key, meaning only you can decrypt. To encrypt for others, use the <code>--to</code> flag.</p>
+<h2 id="encrypting"><a class="header" href="#encrypting">Encrypting</a></h2>
+<h3 id="basic-usage-1"><a class="header" href="#basic-usage-1">Basic usage</a></h3>
+<pre><code class="language-bash">enseal encrypt .env
+</code></pre>
+<p>This reads <code>.env</code>, encrypts the entire file using your age public key, and writes the result to <code>.env.encrypted</code>. The original <code>.env</code> file is not modified.</p>
+<h3 id="custom-output-path"><a class="header" href="#custom-output-path">Custom output path</a></h3>
+<pre><code class="language-bash">enseal encrypt .env --output secrets/production.env.age
+</code></pre>
+<h3 id="multi-recipient-encryption"><a class="header" href="#multi-recipient-encryption">Multi-recipient encryption</a></h3>
+<p>Encrypt so that multiple people can decrypt, each using their own private key:</p>
+<pre><code class="language-bash">enseal encrypt .env --to sarah --to alex
+# ok: encrypted to .env.encrypted (recipients: sarah, alex, self)
+</code></pre>
+<p>Each recipient listed with <code>--to</code> must have a public key imported in your keystore. Your own key is included automatically. Any single recipient can decrypt the file independently.</p>
+<p>This is useful when a team shares a repository and multiple developers need access to the secrets.</p>
+<h2 id="decrypting"><a class="header" href="#decrypting">Decrypting</a></h2>
+<pre><code class="language-bash">enseal decrypt .env.encrypted
+# ok: decrypted to .env
+</code></pre>
+<p>enseal uses your private key from <code>~/.config/enseal/keys/</code> to decrypt. If the file was not encrypted to your key, decryption fails with a clear error.</p>
+<h3 id="custom-output-path-1"><a class="header" href="#custom-output-path-1">Custom output path</a></h3>
+<pre><code class="language-bash">enseal decrypt .env.encrypted --output .env.local
+</code></pre>
+<h2 id="git-workflow"><a class="header" href="#git-workflow">Git Workflow</a></h2>
+<p>The primary use case for at-rest encryption is committing secrets to version control without exposing plaintext values.</p>
+<h3 id="encrypt-before-committing"><a class="header" href="#encrypt-before-committing">Encrypt before committing</a></h3>
+<pre><code class="language-bash"># Edit your .env as usual
+vim .env
+
+# Encrypt before commit
+enseal encrypt .env
+
+# Commit only the encrypted file
+git add .env.encrypted
+git commit -m "update staging secrets"
+
+# Keep .env in .gitignore
+echo ".env" &gt;&gt; .gitignore
+</code></pre>
+<h3 id="decrypt-after-cloning"><a class="header" href="#decrypt-after-cloning">Decrypt after cloning</a></h3>
+<pre><code class="language-bash">git clone git@github.com:team/project.git
+cd project
+
+enseal decrypt .env.encrypted
+# ok: decrypted to .env
+</code></pre>
+<p>This only works if the file was encrypted to your key (or you were listed as a <code>--to</code> recipient).</p>
+<h3 id="recommended-gitignore"><a class="header" href="#recommended-gitignore">Recommended .gitignore</a></h3>
+<pre><code class="language-gitignore"># Plaintext secrets -- never commit
+.env
+.env.local
+.env.*.local
+
+# Encrypted secrets -- safe to commit
+!.env.encrypted
+</code></pre>
+<h2 id="file-format"><a class="header" href="#file-format">File Format</a></h2>
+<p>The output of <code>enseal encrypt</code> is a standard age-encrypted file. It begins with the age header:</p>
+<pre><code>age-encryption.org/v1
+-&gt; X25519 &lt;recipient-stanza&gt;
+---
+&lt;encrypted payload&gt;
+</code></pre>
+<p>This means you can also decrypt with the <code>age</code> CLI directly if needed:</p>
+<pre><code class="language-bash">age --decrypt -i ~/.config/enseal/keys/self.age.key .env.encrypted &gt; .env
+</code></pre>
+<p>However, using <code>enseal decrypt</code> is recommended because it handles output paths and validation automatically.</p>
+<h2 id="comparison-with-per-variable-encryption"><a class="header" href="#comparison-with-per-variable-encryption">Comparison With Per-Variable Encryption</a></h2>
+<p>At-rest whole-file encryption produces an opaque binary blob. You cannot see which variables are inside without decrypting. For a mode that keeps key names visible while encrypting only the values, see <a href="#per-variable-encryption">Per-Variable Encryption</a>.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Aspect</th><th>Whole-file</th><th>Per-variable</th></tr>
+</thead>
+<tbody>
+<tr><td>Output format</td><td>Opaque age blob</td><td>Valid <code>.env</code> with <code>ENC[...]</code> values</td></tr>
+<tr><td>Git diff</td><td>Shows binary changed</td><td>Shows which keys changed</td></tr>
+<tr><td>File size</td><td>Smaller</td><td>Larger (per-value overhead)</td></tr>
+<tr><td>Code review</td><td>Not possible without decrypting</td><td>Key names visible</td></tr>
+<tr><td>Tooling compatibility</td><td>Requires decryption first</td><td>Key-name parsing still works</td></tr>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="per-variable-encryption"><a class="header" href="#per-variable-encryption">Per-Variable Encryption</a></h1>
+<p>Per-variable encryption keeps <code>.env</code> key names in plaintext while encrypting each value individually. The result is still valid <code>.env</code> syntax, which means key-name-based tooling continues to work and <code>git diff</code> shows exactly which variables changed.</p>
+<h2 id="quick-start-2"><a class="header" href="#quick-start-2">Quick Start</a></h2>
+<pre><code class="language-bash">enseal encrypt .env --per-var
+# ok: encrypted 12 variables in .env
+</code></pre>
+<p>This transforms:</p>
+<pre><code class="language-env">DATABASE_URL=postgres://admin:s3cret@db.internal:5432/myapp
+API_KEY=sk_live_4eC39HqLyjWDarjtT1zdp7dc
+STRIPE_WEBHOOK_SECRET=whsec_abc123def456
+PORT=8080
+DEBUG=false
+</code></pre>
+<p>Into:</p>
+<pre><code class="language-env">DATABASE_URL=ENC[age:YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB...]
+API_KEY=ENC[age:YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBh...]
+STRIPE_WEBHOOK_SECRET=ENC[age:b3JnL3YxCi0+IFgyNTUxOSBhYmNkZWYxMjM0NTY...]
+PORT=ENC[age:cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBmb29iYXI...]
+DEBUG=ENC[age:ZW5jcnlwdGlvbi5vcmcvdjEKLT4gWDI1NTE5IGJheg...]
+</code></pre>
+<p>Key names are visible. Values are individually encrypted using age. Each <code>ENC[age:...]</code> token is a base64-encoded age ciphertext for that single value.</p>
+<h2 id="decrypting-1"><a class="header" href="#decrypting-1">Decrypting</a></h2>
+<pre><code class="language-bash">enseal decrypt .env
+# ok: decrypted 12 variables in .env
+</code></pre>
+<p>enseal auto-detects whether a file uses per-variable encryption (by the presence of <code>ENC[age:...]</code> tokens) or whole-file encryption (by the age file header). You do not need to specify a flag – <code>enseal decrypt</code> handles both formats.</p>
+<h2 id="benefits-over-whole-file-encryption"><a class="header" href="#benefits-over-whole-file-encryption">Benefits Over Whole-File Encryption</a></h2>
+<h3 id="meaningful-git-diffs"><a class="header" href="#meaningful-git-diffs">Meaningful git diffs</a></h3>
+<p>When a whole-file encrypted <code>.env</code> changes, <code>git diff</code> shows an opaque binary blob changed. With per-variable encryption, diffs show exactly which keys were modified:</p>
+<pre><code class="language-diff"> DATABASE_URL=ENC[age:YWdlLWVuY3J5cHRpb24ub3JnL3Yx...]
+-API_KEY=ENC[age:YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+...]
++API_KEY=ENC[age:bmV3a2V5dmFsdWVoZXJlMTIzNDU2Nzg5...]
+ STRIPE_WEBHOOK_SECRET=ENC[age:b3JnL3YxCi0+IFgyNTUx...]
+ PORT=ENC[age:cHRpb24ub3JnL3YxCi0+IFgyNTUx...]
+ DEBUG=ENC[age:ZW5jcnlwdGlvbi5vcmcvdjEKLT4g...]
+</code></pre>
+<p>A reviewer can see that <code>API_KEY</code> was rotated without needing to decrypt anything.</p>
+<h3 id="code-review"><a class="header" href="#code-review">Code review</a></h3>
+<p>Pull requests that change encrypted secrets become reviewable. Reviewers can verify that the correct variables were added, removed, or changed – even without access to the decryption key.</p>
+<h3 id="key-name-tooling-still-works"><a class="header" href="#key-name-tooling-still-works">Key-name tooling still works</a></h3>
+<p>Tools that parse <code>.env</code> files for key names (linters, documentation generators, <code>enseal check</code>, CI validation scripts) continue to work. They see the key names and treat the <code>ENC[age:...]</code> tokens as opaque string values.</p>
+<pre><code class="language-bash"># Still works -- checks that all keys in .env.example exist
+enseal check .env
+# ok: all 12 variables present
+</code></pre>
+<h3 id="safe-to-commit"><a class="header" href="#safe-to-commit">Safe to commit</a></h3>
+<p>An application that loads this file without decrypting will see <code>ENC[age:...]</code> as literal string values. It will fail to connect to the database or authenticate with an API, but no plaintext secrets are exposed. The failure mode is safe.</p>
+<h2 id="multi-recipient-encryption-1"><a class="header" href="#multi-recipient-encryption-1">Multi-Recipient Encryption</a></h2>
+<p>Per-variable encryption supports multiple recipients, just like whole-file encryption:</p>
+<pre><code class="language-bash">enseal encrypt .env --per-var --to sarah --to alex
+# ok: encrypted 12 variables (recipients: sarah, alex, self)
+</code></pre>
+<p>Each <code>ENC[age:...]</code> token is encrypted to all listed recipients. Any single recipient can decrypt the file with <code>enseal decrypt .env</code>.</p>
+<h2 id="workflow-example"><a class="header" href="#workflow-example">Workflow Example</a></h2>
+<h3 id="initial-setup"><a class="header" href="#initial-setup">Initial setup</a></h3>
+<pre><code class="language-bash"># Generate keys if you have not already
+enseal keys init
+
+# Encrypt your .env with per-variable encryption
+enseal encrypt .env --per-var --to sarah --to alex
+
+# Commit the encrypted file
+git add .env
+git commit -m "add encrypted environment config"
+</code></pre>
+<h3 id="updating-a-secret"><a class="header" href="#updating-a-secret">Updating a secret</a></h3>
+<pre><code class="language-bash"># Decrypt to edit
+enseal decrypt .env
+
+# Make your changes
+vim .env
+
+# Re-encrypt
+enseal encrypt .env --per-var --to sarah --to alex
+
+# Commit
+git add .env
+git commit -m "rotate API_KEY"
+</code></pre>
+<h3 id="new-team-member"><a class="header" href="#new-team-member">New team member</a></h3>
+<p>When a new developer joins, re-encrypt with them added as a recipient:</p>
+<pre><code class="language-bash">enseal keys import mike.pub
+enseal decrypt .env
+enseal encrypt .env --per-var --to sarah --to alex --to mike
+git add .env
+git commit -m "add mike as secret recipient"
+</code></pre>
+<h2 id="comparison-whole-file-vs-per-variable"><a class="header" href="#comparison-whole-file-vs-per-variable">Comparison: Whole-File vs Per-Variable</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Aspect</th><th>Whole-file (<code>enseal encrypt</code>)</th><th>Per-variable (<code>enseal encrypt --per-var</code>)</th></tr>
+</thead>
+<tbody>
+<tr><td>Command</td><td><code>enseal encrypt .env</code></td><td><code>enseal encrypt .env --per-var</code></td></tr>
+<tr><td>Output</td><td><code>.env.encrypted</code> (opaque age blob)</td><td><code>.env</code> with <code>ENC[age:...]</code> values</td></tr>
+<tr><td>Key names visible</td><td>No</td><td>Yes</td></tr>
+<tr><td>Git diff</td><td>Binary changed</td><td>Shows which keys changed</td></tr>
+<tr><td>Code review</td><td>Requires decryption</td><td>Key-level review without decryption</td></tr>
+<tr><td>File size</td><td>Smaller (single encryption overhead)</td><td>Larger (per-value encryption overhead)</td></tr>
+<tr><td>Tooling compatibility</td><td>Must decrypt first</td><td>Key-name parsing works as-is</td></tr>
+<tr><td>Decryption</td><td><code>enseal decrypt .env.encrypted</code></td><td><code>enseal decrypt .env</code></td></tr>
+<tr><td>Safe if loaded without decrypting</td><td>App cannot read the file at all</td><td>App reads <code>ENC[...]</code> as literal strings (fails safely)</td></tr>
+</tbody>
+</table>
+</div>
+<p>Choose whole-file encryption when simplicity and file size matter. Choose per-variable encryption when you need visibility into which secrets changed, reviewable pull requests, or compatibility with key-name-based tooling.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="running-a-relay"><a class="header" href="#running-a-relay">Running a Relay</a></h1>
+<p><code>enseal serve</code> starts a self-hosted relay server that sender and receiver connect through. The relay is a stateless matchmaker – it pairs two clients on a shared channel and pipes encrypted bytes between them. It never sees plaintext.</p>
+<p>The server feature is included in the default build. If you compiled with <code>--no-default-features</code>, re-enable it with <code>--features server</code>.</p>
+<h2 id="architecture"><a class="header" href="#architecture">Architecture</a></h2>
+<p>The relay has two components:</p>
+<p><strong>Mailbox</strong> – a WebSocket endpoint at <code>/channel/&lt;code&gt;</code>. The first client connects and waits. When a second client connects to the same code, the relay pairs them and begins forwarding messages in both directions. Messages are held only in memory while a client waits for its pair.</p>
+<p><strong>Transit relay</strong> – once paired, the relay is a dumb byte pipe. It forwards WebSocket frames between the two clients without inspecting or storing content. When either side disconnects, the channel is torn down.</p>
+<p>Because enseal uses end-to-end encryption, the relay sees only ciphertext. A compromised relay cannot expose secrets.</p>
+<h2 id="starting-the-server"><a class="header" href="#starting-the-server">Starting the server</a></h2>
+<pre><code class="language-bash">enseal serve
+</code></pre>
+<p>By default this listens on <code>0.0.0.0:4443</code>. The server prints its configuration on startup:</p>
+<pre><code>ok: enseal relay listening on 0.0.0.0:4443
+  max channels:  100
+  channel TTL:   300s
+  max payload:   1048576 bytes
+  rate limit:    10/min per IP
+</code></pre>
+<h2 id="configuration-flags"><a class="header" href="#configuration-flags">Configuration flags</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Flag</th><th>Default</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--port</code></td><td><code>4443</code></td><td>Listen port</td></tr>
+<tr><td><code>--bind</code></td><td><code>0.0.0.0</code></td><td>Bind address</td></tr>
+<tr><td><code>--max-mailboxes</code></td><td><code>100</code></td><td>Maximum concurrent channels</td></tr>
+<tr><td><code>--channel-ttl</code></td><td><code>300</code></td><td>Seconds before an idle channel expires</td></tr>
+<tr><td><code>--max-payload</code></td><td><code>1048576</code></td><td>Maximum WebSocket message size in bytes (1 MB)</td></tr>
+<tr><td><code>--rate-limit</code></td><td><code>10</code></td><td>Maximum new connections per minute per IP address</td></tr>
+</tbody>
+</table>
+</div>
+<p>Example with custom settings:</p>
+<pre><code class="language-bash">enseal serve --port 8443 --max-mailboxes 500 --channel-ttl 600
+</code></pre>
+<h2 id="health-endpoint"><a class="header" href="#health-endpoint">Health endpoint</a></h2>
+<p>The server exposes <code>GET /health</code> which returns JSON:</p>
+<pre><code class="language-json">{
+  "status": "ok",
+  "service": "enseal-relay",
+  "version": "0.10.0"
+}
+</code></pre>
+<p>Use this for load balancer health checks and monitoring. From the command line, you can also check reachability with:</p>
+<pre><code class="language-bash">enseal serve --health
+</code></pre>
+<p>This attempts a TCP connection to the configured address and port and reports whether the relay is reachable.</p>
+<h2 id="connecting-clients-to-the-relay"><a class="header" href="#connecting-clients-to-the-relay">Connecting clients to the relay</a></h2>
+<p>Clients point to the relay with the <code>--relay</code> flag or the <code>ENSEAL_RELAY</code> environment variable.</p>
+<h3 id="per-command-flag"><a class="header" href="#per-command-flag">Per-command flag</a></h3>
+<pre><code class="language-bash"># sender
+enseal share .env --relay wss://relay.internal:4443
+
+# receiver
+enseal receive 7-guitarist-revenge --relay wss://relay.internal:4443
+</code></pre>
+<p>Both sides must use the same relay URL.</p>
+<h3 id="environment-variable"><a class="header" href="#environment-variable">Environment variable</a></h3>
+<pre><code class="language-bash">export ENSEAL_RELAY=wss://relay.internal:4443
+
+enseal share .env
+enseal receive 7-guitarist-revenge
+</code></pre>
+<h3 id="project-configuration"><a class="header" href="#project-configuration">Project configuration</a></h3>
+<p>Set the relay in <code>.enseal.toml</code> so every team member uses the same server without remembering the URL:</p>
+<pre><code class="language-toml">[defaults]
+relay = "wss://relay.internal:4443"
+</code></pre>
+<p>When a relay is configured in <code>.enseal.toml</code>, all <code>share</code> and <code>receive</code> commands in that project directory use it automatically. The <code>--relay</code> flag and <code>ENSEAL_RELAY</code> variable override the config file.</p>
+<h2 id="precedence-order"><a class="header" href="#precedence-order">Precedence order</a></h2>
+<p>If multiple relay sources are set, enseal resolves them in this order (highest priority first):</p>
+<ol>
+<li><code>--relay</code> command-line flag</li>
+<li><code>ENSEAL_RELAY</code> environment variable</li>
+<li><code>relay</code> field in <code>.enseal.toml</code></li>
+<li>Public relay (default, when nothing else is configured)</li>
+</ol>
+<h2 id="security-considerations"><a class="header" href="#security-considerations">Security considerations</a></h2>
+<p>The relay is designed to be safe to expose on a network:</p>
+<ul>
+<li><strong>End-to-end encryption</strong> – the relay forwards ciphertext. Even if the relay host is compromised, no secrets are exposed.</li>
+<li><strong>Rate limiting</strong> – per-IP connection throttling prevents abuse. The default is 10 new connections per minute per IP.</li>
+<li><strong>Channel expiry</strong> – idle channels are cleaned up after the configured TTL (default 5 minutes), preventing resource exhaustion.</li>
+<li><strong>Payload size limits</strong> – oversized messages are rejected to prevent memory abuse.</li>
+<li><strong>No persistence</strong> – the relay stores nothing to disk. All state is in-memory and lost on restart.</li>
+</ul>
+<p>For production deployments, place TLS termination in front of the relay. See <a href="#deployment-options">Deployment Options</a> for details.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="deployment-options"><a class="header" href="#deployment-options">Deployment Options</a></h1>
+<p>The relay server is a single static binary with no runtime dependencies. The target is deployment in under 60 seconds on any platform.</p>
+<h2 id="docker"><a class="header" href="#docker">Docker</a></h2>
+<p>The fastest way to get a relay running:</p>
+<pre><code class="language-bash">docker run -d --name enseal-relay -p 4443:4443 enseal/relay
+</code></pre>
+<p>The Docker image is built with <code>--no-default-features --features server</code>, so it contains only the relay – no CLI commands. The entrypoint is <code>enseal serve</code>.</p>
+<p>Pass configuration through the command:</p>
+<pre><code class="language-bash">docker run -d --name enseal-relay -p 4443:4443 enseal/relay \
+  --port 4443 \
+  --max-mailboxes 500 \
+  --channel-ttl 600 \
+  --rate-limit 20
+</code></pre>
+<p>Set the log level with the <code>RUST_LOG</code> environment variable:</p>
+<pre><code class="language-bash">docker run -d --name enseal-relay -p 4443:4443 \
+  -e RUST_LOG=info \
+  enseal/relay
+</code></pre>
+<h2 id="docker-compose"><a class="header" href="#docker-compose">Docker Compose</a></h2>
+<p>For production, put TLS termination in front of the relay. The relay itself speaks plain WebSocket; a reverse proxy handles TLS.</p>
+<h3 id="with-caddy-automatic-tls"><a class="header" href="#with-caddy-automatic-tls">With Caddy (automatic TLS)</a></h3>
+<pre><code class="language-yaml">services:
+  relay:
+    image: enseal/relay
+    restart: unless-stopped
+    environment:
+      - RUST_LOG=info
+    command: ["--port", "4443", "--max-mailboxes", "100", "--channel-ttl", "300"]
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+    depends_on:
+      - relay
+
+volumes:
+  caddy_data:
+</code></pre>
+<p>With a <code>Caddyfile</code>:</p>
+<pre><code>relay.example.com {
+    reverse_proxy relay:4443
+}
+</code></pre>
+<p>Caddy automatically obtains and renews Let’s Encrypt certificates for the domain. Clients connect with:</p>
+<pre><code class="language-bash">enseal share .env --relay wss://relay.example.com
+</code></pre>
+<h3 id="with-nginx"><a class="header" href="#with-nginx">With nginx</a></h3>
+<pre><code class="language-yaml">services:
+  relay:
+    image: enseal/relay
+    restart: unless-stopped
+    environment:
+      - RUST_LOG=info
+    command: ["--port", "4443", "--max-mailboxes", "100", "--channel-ttl", "300"]
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - relay
+</code></pre>
+<p>With an <code>nginx.conf</code>:</p>
+<pre><code class="language-nginx">server {
+    listen 443 ssl;
+    server_name relay.example.com;
+
+    ssl_certificate     /etc/letsencrypt/live/relay.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/relay.example.com/privkey.pem;
+
+    location / {
+        proxy_pass http://relay:4443;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_read_timeout 300s;
+    }
+}
+</code></pre>
+<p>The <code>proxy_read_timeout</code> must be at least as long as the channel TTL to prevent nginx from closing idle WebSocket connections before the relay does.</p>
+<h2 id="static-binary"><a class="header" href="#static-binary">Static binary</a></h2>
+<p>Run the relay directly without containers:</p>
+<pre><code class="language-bash">enseal serve --port 4443
+</code></pre>
+<p>This works anywhere the enseal binary runs. Download a release binary or build from source:</p>
+<pre><code class="language-bash">cargo build --release --no-default-features --features server
+</code></pre>
+<p>The resulting binary is in <code>target/release/enseal</code>.</p>
+<h2 id="systemd"><a class="header" href="#systemd">systemd</a></h2>
+<p>For Linux servers, a systemd unit file is provided at <code>deploy/enseal-relay.service</code>:</p>
+<pre><code class="language-ini">[Unit]
+Description=enseal relay server
+After=network.target
+
+[Service]
+Type=simple
+User=enseal
+Group=enseal
+ExecStart=/usr/local/bin/enseal serve --port 4443 --bind 0.0.0.0
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65535
+
+# Security hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Install and start:</p>
+<pre><code class="language-bash"># Create a dedicated user
+sudo useradd --system --no-create-home enseal
+
+# Copy the binary
+sudo cp target/release/enseal /usr/local/bin/enseal
+
+# Install the unit file
+sudo cp deploy/enseal-relay.service /etc/systemd/system/
+
+# Start the service
+sudo systemctl daemon-reload
+sudo systemctl enable --now enseal-relay
+
+# Check status
+sudo systemctl status enseal-relay
+</code></pre>
+<h2 id="kubernetes"><a class="header" href="#kubernetes">Kubernetes</a></h2>
+<p>A Helm chart is provided at <code>deploy/helm/</code>. Install with:</p>
+<pre><code class="language-bash">helm install enseal-relay ./deploy/helm/
+</code></pre>
+<p>Override values as needed:</p>
+<pre><code class="language-bash">helm install enseal-relay ./deploy/helm/ \
+  --set relay.port=4443 \
+  --set relay.maxMailboxes=500 \
+  --set relay.channelTtl=600 \
+  --set replicaCount=2
+</code></pre>
+<p>The default resource limits are conservative (100m CPU request, 200m limit, 64Mi memory request, 128Mi limit). The relay is lightweight – a single replica handles many concurrent channels. Scale horizontally only if you expect very high connection counts.</p>
+<p>Expose the service through an Ingress with TLS termination, or use a LoadBalancer service type with your cloud provider’s TLS integration.</p>
+<h2 id="production-checklist"><a class="header" href="#production-checklist">Production checklist</a></h2>
+<p>Before exposing the relay to your team:</p>
+<p><strong>TLS termination</strong> – The relay speaks plain WebSocket. Place a reverse proxy (Caddy, nginx, cloud load balancer) in front to terminate TLS. Clients connect with <code>wss://</code> URLs.</p>
+<p><strong>Firewall rules</strong> – Open only the relay port (default 4443 or 443 behind a proxy). The relay does not need outbound internet access.</p>
+<p><strong>Monitoring</strong> – Poll the <code>/health</code> endpoint from your monitoring system. A <code>200</code> response with <code>"status": "ok"</code> confirms the relay is running. Example with curl:</p>
+<pre><code class="language-bash">curl -s https://relay.example.com/health | jq .
+</code></pre>
+<pre><code class="language-json">{
+  "status": "ok",
+  "service": "enseal-relay",
+  "version": "0.10.0"
+}
+</code></pre>
+<p><strong>Logging</strong> – Set <code>RUST_LOG</code> to control verbosity. Recommended levels:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Level</th><th>Use case</th></tr>
+</thead>
+<tbody>
+<tr><td><code>error</code></td><td>Production, minimal output</td></tr>
+<tr><td><code>info</code></td><td>Production, connection events visible</td></tr>
+<tr><td><code>debug</code></td><td>Troubleshooting, includes channel lifecycle details</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-bash"># systemd: add to the unit file
+Environment=RUST_LOG=info
+
+# Docker: pass as environment variable
+docker run -e RUST_LOG=info enseal/relay
+</code></pre>
+<p><strong>Rate limiting</strong> – The built-in rate limiter (default 10 connections/min per IP) provides basic protection. For internet-facing deployments, consider adding rate limiting at the reverse proxy layer as well.</p>
+<p><strong>Resource limits</strong> – The relay holds channel state in memory only. Each active channel uses a small amount of memory for two message buffers. The default max of 100 concurrent channels is suitable for most teams. Increase <code>--max-mailboxes</code> if you have a large team with many simultaneous transfers.</p>
+<p><strong>Backups</strong> – Not needed. The relay is stateless. All in-memory state is ephemeral and disposable. Restarting the relay clears all active channels – clients will need to retry their transfers.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="cli-reference"><a class="header" href="#cli-reference">CLI Reference</a></h1>
+<p>Complete reference for all enseal commands, subcommands, and flags.</p>
+<h2 id="global-flags"><a class="header" href="#global-flags">Global Flags</a></h2>
+<p>These flags are available on all commands.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Flag</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--verbose</code>, <code>-v</code></td><td>Show debug output. Shows variable names but never secret values.</td></tr>
+<tr><td><code>--quiet</code>, <code>-q</code></td><td>Minimal output, suitable for scripting. Suppresses warnings.</td></tr>
+<tr><td><code>--config &lt;path&gt;</code></td><td>Path to <code>.enseal.toml</code> manifest file. Defaults to <code>.enseal.toml</code> in the current directory.</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="core-commands"><a class="header" href="#core-commands">Core Commands</a></h2>
+<h3 id="enseal-share-file"><a class="header" href="#enseal-share-file"><code>enseal share [&lt;file&gt;]</code></a></h3>
+<p>Send a <code>.env</code> file, piped input, or inline secret. In anonymous mode (default), generates a wormhole code for the recipient. In identity mode (<code>--to</code>), encrypts to a specific recipient’s public key.</p>
+<p>Input is selected by priority:</p>
+<ol>
+<li><code>--secret &lt;value&gt;</code> – inline string (raw or KEY=VALUE)</li>
+<li>stdin pipe – automatically detected when stdin is not a TTY</li>
+<li><code>&lt;file&gt;</code> – path to a <code>.env</code> file (defaults to <code>.env</code> in the current directory)</li>
+</ol>
+<p><strong>Flags:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Flag</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--to &lt;identity&gt;</code></td><td>Identity mode: encrypt to a named recipient, alias, or group. Without this flag, anonymous wormhole mode is used.</td></tr>
+<tr><td><code>--output &lt;dir&gt;</code></td><td>File drop (identity mode only): write an encrypted file to the specified directory instead of transferring over the network.</td></tr>
+<tr><td><code>--secret &lt;value&gt;</code></td><td>Inline secret. Can be a raw string or <code>KEY=VALUE</code> pair. Puts the value in shell history – prefer piping for sensitive values.</td></tr>
+<tr><td><code>--label &lt;name&gt;</code></td><td>Human-readable label for raw or piped secrets (e.g., <code>"Stripe API key"</code>). Shown to the recipient on receive.</td></tr>
+<tr><td><code>--as &lt;KEY&gt;</code></td><td>Wrap a raw string as <code>KEY=&lt;value&gt;</code> so the recipient gets a <code>.env</code>-compatible line.</td></tr>
+<tr><td><code>--relay &lt;url&gt;</code></td><td>Use a specific relay server instead of the public relay. Also configurable via <code>ENSEAL_RELAY</code> env var.</td></tr>
+<tr><td><code>--env &lt;profile&gt;</code></td><td>Environment profile. Resolves to <code>.env.&lt;profile&gt;</code> in the current directory (e.g., <code>--env staging</code> reads <code>.env.staging</code>).</td></tr>
+<tr><td><code>--exclude &lt;pattern&gt;</code></td><td>Regex pattern to exclude matching variable names before sending (e.g., <code>"^PUBLIC_"</code>). Only applies to <code>.env</code> file input.</td></tr>
+<tr><td><code>--include &lt;pattern&gt;</code></td><td>Regex pattern to include only matching variable names. Only applies to <code>.env</code> file input.</td></tr>
+<tr><td><code>--no-filter</code></td><td>Send the raw file contents without <code>.env</code> parsing or filtering.</td></tr>
+<tr><td><code>--no-interpolate</code></td><td>Do not resolve <code>${VAR}</code> references before sending. Sends raw interpolation syntax as-is.</td></tr>
+<tr><td><code>--words &lt;n&gt;</code></td><td>Number of words in the wormhole code (default: 2, range: 2-5). More words increase entropy. Anonymous mode only.</td></tr>
+<tr><td><code>--timeout &lt;seconds&gt;</code></td><td>Channel expiry time in seconds (default: 300).</td></tr>
+<tr><td><code>--quiet</code>, <code>-q</code></td><td>Suppress warnings (including the <code>--secret</code> shell history warning).</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Share .env file (anonymous mode, default)
+enseal share .env
+
+# Share with more wormhole code words for higher security
+enseal share .env --words 4
+
+# Share to a specific recipient (identity mode)
+enseal share .env --to sarah
+
+# Share a staging environment
+enseal share --env staging --to backend-team
+
+# File drop for air-gapped transfer
+enseal share .env --to alex@company.com --output ./drop/
+
+# Inline secret
+enseal share --secret "sk_live_abc123" --label "Stripe key"
+
+# Pipe a secret (preferred over --secret for sensitive values)
+pass show stripe/key | enseal share --label "Stripe"
+
+# Pipe and wrap as KEY=VALUE
+echo -n "sk_live_abc123" | enseal share --as STRIPE_KEY
+
+# Exclude public variables before sending
+enseal share .env --exclude "^NEXT_PUBLIC_"
+
+# Use a self-hosted relay
+enseal share .env --relay wss://relay.internal:4443
+</code></pre>
+<hr>
+<h3 id="enseal-receive-codefile"><a class="header" href="#enseal-receive-codefile"><code>enseal receive [&lt;code|file&gt;]</code></a></h3>
+<p>Receive secrets. Accepts a wormhole code (anonymous mode) or an encrypted file path (identity mode file drop).</p>
+<p>Output adapts to the payload format:</p>
+<ul>
+<li><code>.env</code> payload: writes to a file (default: <code>.env</code>)</li>
+<li>Raw string payload: prints to stdout</li>
+<li>KEY=VALUE payload: prints to stdout in <code>.env</code>-compatible format</li>
+</ul>
+<p><strong>Flags:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Flag</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--output &lt;path&gt;</code></td><td>Write to a specific file path, overriding the default output behavior.</td></tr>
+<tr><td><code>--clipboard</code></td><td>Copy the received value to the system clipboard instead of writing to stdout or a file.</td></tr>
+<tr><td><code>--no-write</code></td><td>Print to stdout even for <code>.env</code> payloads. Does not write any file.</td></tr>
+<tr><td><code>--force</code></td><td>Overwrite the output file if it already exists without prompting.</td></tr>
+<tr><td><code>--relay &lt;url&gt;</code></td><td>Use a specific relay server. Also configurable via <code>ENSEAL_RELAY</code> env var.</td></tr>
+<tr><td><code>--quiet</code>, <code>-q</code></td><td>Minimal output.</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Receive using a wormhole code
+enseal receive 7-guitarist-revenge
+
+# Write to a specific file
+enseal receive 7-guitarist-revenge --output staging.env
+
+# Copy a raw secret to clipboard
+enseal receive 4-orbital-hammock --clipboard
+
+# Pipe to another command
+enseal receive 4-orbital-hammock | pbcopy
+
+# Print .env payload to stdout instead of writing a file
+enseal receive 7-guitarist-revenge --no-write
+
+# Receive from an encrypted file drop
+enseal receive ./drop/alex@company.com.env.age
+
+# Overwrite existing .env without prompting
+enseal receive 7-guitarist-revenge --force
+</code></pre>
+<hr>
+<h3 id="enseal-inject-code----command"><a class="header" href="#enseal-inject-code----command"><code>enseal inject &lt;code&gt; -- &lt;command&gt;</code></a></h3>
+<p>Receive secrets and inject them as environment variables into a child process. Secrets never touch the filesystem. When the child process exits, the secrets are gone.</p>
+<p><strong>Positional arguments:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Argument</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>&lt;code&gt;</code></td><td>Wormhole code (anonymous mode) or encrypted file path (identity mode).</td></tr>
+<tr><td><code>-- &lt;command&gt;</code></td><td>The command to run with injected secrets. Everything after <code>--</code> is treated as the child command and its arguments.</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Flags:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Flag</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--listen</code></td><td>Identity mode: listen for an incoming transfer instead of providing a code.</td></tr>
+<tr><td><code>--relay &lt;url&gt;</code></td><td>Use a specific relay server. Also configurable via <code>ENSEAL_RELAY</code> env var.</td></tr>
+<tr><td><code>--quiet</code>, <code>-q</code></td><td>Minimal output.</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Inject via wormhole code into npm start
+enseal inject 7-guitarist-revenge -- npm start
+
+# Identity mode: listen for incoming secrets, inject into docker compose
+enseal inject --listen -- docker compose up
+
+# Inject from an encrypted file drop
+enseal inject ./staging.env.age -- python manage.py runserver
+
+# Use a self-hosted relay
+enseal inject --relay wss://relay.internal:4443 7-guitarist-revenge -- cargo run
+</code></pre>
+<hr>
+<h3 id="enseal-keys-subcommand"><a class="header" href="#enseal-keys-subcommand"><code>enseal keys &lt;subcommand&gt;</code></a></h3>
+<p>Manage identity keys, aliases, and groups. Keys are stored in <code>~/.config/enseal/keys/</code>.</p>
+<h4 id="enseal-keys-init"><a class="header" href="#enseal-keys-init"><code>enseal keys init</code></a></h4>
+<p>Generate your keypair. Creates an age keypair (for encryption) and an ed25519 keypair (for signing).</p>
+<pre><code class="language-bash">enseal keys init
+</code></pre>
+<h4 id="enseal-keys-export---armor"><a class="header" href="#enseal-keys-export---armor"><code>enseal keys export [--armor]</code></a></h4>
+<p>Print your public key bundle to stdout. Share this with teammates so they can send you encrypted secrets.</p>
+<pre><code class="language-bash"># Print public key
+enseal keys export
+
+# Armor-encoded output
+enseal keys export --armor
+</code></pre>
+<h4 id="enseal-keys-import-file"><a class="header" href="#enseal-keys-import-file"><code>enseal keys import &lt;file&gt;</code></a></h4>
+<p>Import a colleague’s public key. Displays the identity and fingerprint, then prompts for confirmation before trusting.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Flag</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--yes</code></td><td>Skip the confirmation prompt. Useful for scripted workflows.</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-bash"># Import with confirmation prompt
+enseal keys import alex.pub
+
+# Import without prompting
+enseal keys import alex.pub --yes
+</code></pre>
+<h4 id="enseal-keys-list"><a class="header" href="#enseal-keys-list"><code>enseal keys list</code></a></h4>
+<p>Show all trusted keys and their aliases.</p>
+<pre><code class="language-bash">enseal keys list
+</code></pre>
+<h4 id="enseal-keys-remove-identity"><a class="header" href="#enseal-keys-remove-identity"><code>enseal keys remove &lt;identity&gt;</code></a></h4>
+<p>Remove a trusted key by identity name.</p>
+<pre><code class="language-bash">enseal keys remove alex@company.com
+</code></pre>
+<h4 id="enseal-keys-fingerprint"><a class="header" href="#enseal-keys-fingerprint"><code>enseal keys fingerprint</code></a></h4>
+<p>Display your key fingerprint for out-of-band verification with teammates.</p>
+<pre><code class="language-bash">enseal keys fingerprint
+</code></pre>
+<h4 id="enseal-keys-alias-name-identity"><a class="header" href="#enseal-keys-alias-name-identity"><code>enseal keys alias &lt;name&gt; &lt;identity&gt;</code></a></h4>
+<p>Map a short nickname to a full identity string. Aliases can be used anywhere an identity is expected.</p>
+<pre><code class="language-bash">enseal keys alias sarah sarah@company.com
+
+# Now you can use:
+enseal share .env --to sarah
+</code></pre>
+<h4 id="enseal-keys-group-create-name"><a class="header" href="#enseal-keys-group-create-name"><code>enseal keys group create &lt;name&gt;</code></a></h4>
+<p>Create a named recipient group.</p>
+<pre><code class="language-bash">enseal keys group create backend-team
+</code></pre>
+<h4 id="enseal-keys-group-add-group-identity"><a class="header" href="#enseal-keys-group-add-group-identity"><code>enseal keys group add &lt;group&gt; &lt;identity&gt;</code></a></h4>
+<p>Add an identity to a group.</p>
+<pre><code class="language-bash">enseal keys group add backend-team sarah@company.com
+enseal keys group add backend-team alex@company.com
+</code></pre>
+<h4 id="enseal-keys-group-remove-group-identity"><a class="header" href="#enseal-keys-group-remove-group-identity"><code>enseal keys group remove &lt;group&gt; &lt;identity&gt;</code></a></h4>
+<p>Remove an identity from a group.</p>
+<pre><code class="language-bash">enseal keys group remove backend-team alex@company.com
+</code></pre>
+<h4 id="enseal-keys-group-list-name"><a class="header" href="#enseal-keys-group-list-name"><code>enseal keys group list [name]</code></a></h4>
+<p>List all groups, or list members of a specific group.</p>
+<pre><code class="language-bash"># List all groups
+enseal keys group list
+
+# List members of a specific group
+enseal keys group list backend-team
+</code></pre>
+<h4 id="enseal-keys-group-delete-name"><a class="header" href="#enseal-keys-group-delete-name"><code>enseal keys group delete &lt;name&gt;</code></a></h4>
+<p>Delete a group entirely.</p>
+<pre><code class="language-bash">enseal keys group delete backend-team
+</code></pre>
+<hr>
+<h3 id="enseal-serve"><a class="header" href="#enseal-serve"><code>enseal serve</code></a></h3>
+<p>Run a self-hosted relay server. The server is a stateless matchmaker and transit relay. It sees only ciphertext and holds nothing in persistent storage.</p>
+<p><strong>Flags:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Flag</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--port &lt;port&gt;</code></td><td>Listen port (default: 4443).</td></tr>
+<tr><td><code>--bind &lt;addr&gt;</code></td><td>Bind address (default: <code>0.0.0.0</code>).</td></tr>
+<tr><td><code>--max-mailboxes &lt;n&gt;</code></td><td>Maximum concurrent channels (default: 100).</td></tr>
+<tr><td><code>--channel-ttl &lt;seconds&gt;</code></td><td>How long idle channels survive before cleanup (default: 300).</td></tr>
+<tr><td><code>--max-payload &lt;bytes&gt;</code></td><td>Maximum payload size per transfer (default: 1048576).</td></tr>
+<tr><td><code>--rate-limit &lt;n&gt;</code></td><td>Maximum new connections per second per IP.</td></tr>
+<tr><td><code>--health</code></td><td>Print a server health check and exit.</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Start relay on default port
+enseal serve
+
+# Bind to a specific port and address
+enseal serve --port 8443 --bind 127.0.0.1
+
+# Configure limits
+enseal serve --max-mailboxes 500 --channel-ttl 600
+
+# Check if a running relay is healthy
+enseal serve --health
+</code></pre>
+<hr>
+<h2 id="toolkit-commands"><a class="header" href="#toolkit-commands">Toolkit Commands</a></h2>
+<h3 id="enseal-check-file"><a class="header" href="#enseal-check-file"><code>enseal check [file]</code></a></h3>
+<p>Validate that a <code>.env</code> file contains all variables listed in <code>.env.example</code>. If a <code>.enseal.toml</code> with schema rules is present, also runs schema validation.</p>
+<pre><code class="language-bash"># Check .env against .env.example
+enseal check
+
+# Check a specific file
+enseal check .env.staging
+</code></pre>
+<hr>
+<h3 id="enseal-diff-file1-file2"><a class="header" href="#enseal-diff-file1-file2"><code>enseal diff &lt;file1&gt; &lt;file2&gt;</code></a></h3>
+<p>Compare two <code>.env</code> files and show missing or extra variable names. Shows keys only – never displays values.</p>
+<pre><code class="language-bash"># Compare .env against .env.example
+enseal diff .env .env.example
+
+# Compare two environment files
+enseal diff .env.staging .env.production
+</code></pre>
+<hr>
+<h3 id="enseal-redact-file"><a class="header" href="#enseal-redact-file"><code>enseal redact &lt;file&gt;</code></a></h3>
+<p>Output a copy of a <code>.env</code> file with all values replaced by <code>&lt;REDACTED&gt;</code>. Useful for sharing structure without exposing secrets.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Flag</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--output &lt;path&gt;</code></td><td>Write redacted output to a file instead of stdout.</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-bash"># Print redacted .env to stdout
+enseal redact .env
+
+# Write redacted output to a file
+enseal redact .env --output .env.redacted
+</code></pre>
+<hr>
+<h3 id="enseal-validate-file"><a class="header" href="#enseal-validate-file"><code>enseal validate &lt;file&gt;</code></a></h3>
+<p>Validate a <code>.env</code> file against schema rules defined in <code>.enseal.toml</code>. Reports missing required variables, type mismatches, pattern violations, and constraint failures.</p>
+<pre><code class="language-bash">enseal validate .env
+</code></pre>
+<p>Example output:</p>
+<pre><code>error: missing required: JWT_SECRET
+error: DATABASE_URL doesn't match pattern ^postgres://
+error: PORT value "abc" is not an integer
+ok: 11/14 variables passed validation
+</code></pre>
+<hr>
+<h3 id="enseal-template-file"><a class="header" href="#enseal-template-file"><code>enseal template &lt;file&gt;</code></a></h3>
+<p>Generate a <code>.env.example</code> from a real <code>.env</code> file. Uses schema rules from <code>.enseal.toml</code> if available, otherwise infers types from values. Produces descriptions rather than <code>&lt;REDACTED&gt;</code> placeholders.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Flag</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--output &lt;path&gt;</code></td><td>Write template to a file instead of stdout.</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-bash"># Print template to stdout
+enseal template .env
+
+# Write template to .env.example
+enseal template .env --output .env.example
+</code></pre>
+<p>Example output:</p>
+<pre><code># DATABASE_URL=&lt;postgres connection string&gt;
+# API_KEY=&lt;32+ character string&gt;
+# PORT=&lt;integer, 1024-65535&gt;
+# DEBUG=&lt;boolean&gt;
+</code></pre>
+<hr>
+<h2 id="encryption-commands"><a class="header" href="#encryption-commands">Encryption Commands</a></h2>
+<h3 id="enseal-encrypt-file"><a class="header" href="#enseal-encrypt-file"><code>enseal encrypt &lt;file&gt;</code></a></h3>
+<p>Encrypt a <code>.env</code> file for safe storage in git, using age encryption.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Flag</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--per-var</code></td><td>Encrypt each variable value individually. Keys remain visible for diffing, values are wrapped in <code>ENC[age:...]</code>.</td></tr>
+<tr><td><code>--to &lt;identity&gt;</code></td><td>Encrypt to specific recipients. Can be specified multiple times for multi-recipient encryption. Any recipient can decrypt.</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-bash"># Whole-file encryption (produces .env.encrypted)
+enseal encrypt .env
+
+# Per-variable encryption (keys visible, values encrypted)
+enseal encrypt .env --per-var
+
+# Encrypt to specific recipients
+enseal encrypt .env --to sarah --to alex
+</code></pre>
+<p>Per-variable output format:</p>
+<pre><code>DB_HOST=ENC[age:YWdlLWVuY3J5cHRpb24...]
+DB_PORT=ENC[age:b3RoZXItZW5jcnlwdGVk...]
+</code></pre>
+<hr>
+<h3 id="enseal-decrypt-file"><a class="header" href="#enseal-decrypt-file"><code>enseal decrypt &lt;file&gt;</code></a></h3>
+<p>Decrypt an encrypted <code>.env</code> file. Works with both whole-file and per-variable encrypted formats.</p>
+<pre><code class="language-bash"># Decrypt whole-file encryption
+enseal decrypt .env.encrypted
+
+# Decrypt per-variable encryption
+enseal decrypt .env.per-var
+</code></pre>
+<hr>
+<h2 id="environment-variables"><a class="header" href="#environment-variables">Environment Variables</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Variable</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>ENSEAL_RELAY</code></td><td>Default relay server URL. Equivalent to <code>--relay</code>.</td></tr>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="configuration-ensealtoml"><a class="header" href="#configuration-ensealtoml">Configuration (.enseal.toml)</a></h1>
+<p>enseal supports an optional configuration file named <code>.enseal.toml</code> placed at the root of your project. When present, it applies default settings, filtering rules, schema validation, and project metadata to all enseal commands run in that directory.</p>
+<p>If no <code>.enseal.toml</code> is found, enseal operates with built-in defaults. No configuration file is required for basic usage.</p>
+<hr>
+<h2 id="sections"><a class="header" href="#sections">Sections</a></h2>
+<h3 id="defaults"><a class="header" href="#defaults"><code>[defaults]</code></a></h3>
+<p>Override default values for common flags. These are applied when the corresponding flag is not provided on the command line.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Key</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>relay</code></td><td>string</td><td>Default relay URL. Equivalent to <code>--relay</code> or <code>ENSEAL_RELAY</code>.</td></tr>
+<tr><td><code>timeout</code></td><td>integer</td><td>Channel expiry in seconds (default: 300).</td></tr>
+<tr><td><code>words</code></td><td>integer</td><td>Number of wormhole code words (default: 2, range: 2-5).</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-toml">[defaults]
+relay = "wss://relay.internal.company.com:4443"
+timeout = 600
+words = 3
+</code></pre>
+<hr>
+<h3 id="filter"><a class="header" href="#filter"><code>[filter]</code></a></h3>
+<p>Define patterns to automatically strip variables before sending. Useful for excluding public or non-secret variables from transfers. Filters apply only to <code>.env</code> file input – they do not affect inline secrets or piped input.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Key</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>exclude</code></td><td>array of strings</td><td>Regex patterns. Variables whose names match any pattern are removed before sending.</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-toml">[filter]
+exclude = ["^PUBLIC_", "^NEXT_PUBLIC_", "^REACT_APP_"]
+</code></pre>
+<p>With this configuration, running <code>enseal share .env</code> will automatically strip any variable whose name starts with <code>PUBLIC_</code>, <code>NEXT_PUBLIC_</code>, or <code>REACT_APP_</code> before transferring.</p>
+<p>Patterns are matched against variable names only (not values). Each pattern is a standard regex.</p>
+<hr>
+<h3 id="identity"><a class="header" href="#identity"><code>[identity]</code></a></h3>
+<p>Configure defaults for identity mode operations.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Key</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>default_recipient</code></td><td>string</td><td>Default <code>--to</code> value when identity mode is used. Can be an identity, alias, or group name.</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-toml">[identity]
+default_recipient = "devops-team"
+</code></pre>
+<hr>
+<h3 id="metadata"><a class="header" href="#metadata"><code>[metadata]</code></a></h3>
+<p>Set project metadata included in transfer envelopes. This metadata is shown to the recipient for context.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Key</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>project</code></td><td>string</td><td>Project name. If omitted, auto-detected from <code>Cargo.toml</code> (<code>[package].name</code>) or <code>package.json</code> (<code>name</code> field) in the current directory.</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-toml">[metadata]
+project = "acme-api"
+</code></pre>
+<hr>
+<h3 id="schema"><a class="header" href="#schema"><code>[schema]</code></a></h3>
+<p>Define required variables and validation rules. Used by <code>enseal validate</code>, <code>enseal check</code> (when schema exists), and automatically on <code>enseal receive</code> (as a non-blocking warning).</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Key</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>required</code></td><td>array of strings</td><td>Variable names that must be present in the <code>.env</code> file.</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-toml">[schema]
+required = ["DATABASE_URL", "API_KEY", "JWT_SECRET", "PORT"]
+</code></pre>
+<hr>
+<h3 id="schemarulesvarname"><a class="header" href="#schemarulesvarname"><code>[schema.rules.&lt;VARNAME&gt;]</code></a></h3>
+<p>Per-variable validation rules. Each rule is a table keyed by the variable name.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Key</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>type</code></td><td>string</td><td>Expected value type. See supported types below. Default: <code>"string"</code>.</td></tr>
+<tr><td><code>pattern</code></td><td>string</td><td>Regex the value must match.</td></tr>
+<tr><td><code>min_length</code></td><td>integer</td><td>Minimum character length of the value.</td></tr>
+<tr><td><code>max_length</code></td><td>integer</td><td>Maximum character length of the value.</td></tr>
+<tr><td><code>range</code></td><td>array of two integers</td><td>Allowed <code>[min, max]</code> range for integer-typed values.</td></tr>
+<tr><td><code>enum</code></td><td>array of strings</td><td>Exhaustive list of allowed values.</td></tr>
+<tr><td><code>description</code></td><td>string</td><td>Human-readable description. Used by <code>enseal template</code> to generate <code>.env.example</code> entries.</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Supported types:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>string</code></td><td>Any string value (default).</td></tr>
+<tr><td><code>integer</code></td><td>Decimal integer. Validated with optional <code>range</code> constraint.</td></tr>
+<tr><td><code>boolean</code></td><td>Must be one of: <code>true</code>, <code>false</code>, <code>1</code>, <code>0</code>, <code>yes</code>, <code>no</code>.</td></tr>
+<tr><td><code>url</code></td><td>Must be a syntactically valid URL.</td></tr>
+<tr><td><code>email</code></td><td>Must be a syntactically valid email address.</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-toml">[schema.rules.DATABASE_URL]
+pattern = "^postgres://"
+description = "PostgreSQL connection string"
+
+[schema.rules.API_KEY]
+min_length = 32
+description = "API key from dashboard"
+
+[schema.rules.PORT]
+type = "integer"
+range = [1024, 65535]
+
+[schema.rules.DEBUG]
+type = "boolean"
+
+[schema.rules.LOG_LEVEL]
+enum = ["debug", "info", "warn", "error"]
+</code></pre>
+<hr>
+<h2 id="full-example"><a class="header" href="#full-example">Full Example</a></h2>
+<p>A complete <code>.enseal.toml</code> demonstrating all sections:</p>
+<pre><code class="language-toml">[defaults]
+relay = "wss://relay.internal.company.com:4443"
+timeout = 600
+words = 3
+
+[filter]
+exclude = ["^PUBLIC_", "^NEXT_PUBLIC_", "^REACT_APP_"]
+
+[identity]
+default_recipient = "devops-team"
+
+[metadata]
+project = "acme-api"
+
+[schema]
+required = ["DATABASE_URL", "API_KEY", "JWT_SECRET", "PORT", "LOG_LEVEL"]
+
+[schema.rules.DATABASE_URL]
+pattern = "^postgres://"
+description = "PostgreSQL connection string"
+
+[schema.rules.API_KEY]
+min_length = 32
+description = "API key from the admin dashboard"
+
+[schema.rules.JWT_SECRET]
+min_length = 64
+description = "JWT signing secret"
+
+[schema.rules.PORT]
+type = "integer"
+range = [1024, 65535]
+description = "Application listen port"
+
+[schema.rules.DEBUG]
+type = "boolean"
+description = "Enable debug mode"
+
+[schema.rules.LOG_LEVEL]
+enum = ["debug", "info", "warn", "error"]
+description = "Application log level"
+
+[schema.rules.SMTP_HOST]
+type = "url"
+description = "SMTP server URL"
+
+[schema.rules.ADMIN_EMAIL]
+type = "email"
+description = "Admin notification email address"
+</code></pre>
+<hr>
+<h2 id="validation-behavior"><a class="header" href="#validation-behavior">Validation Behavior</a></h2>
+<p>Schema validation runs in these contexts:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Context</th><th>Behavior</th></tr>
+</thead>
+<tbody>
+<tr><td><code>enseal validate</code></td><td>Explicit validation. Reports all errors. Non-zero exit code on failure.</td></tr>
+<tr><td><code>enseal check</code></td><td>Runs schema validation in addition to checking against <code>.env.example</code> when <code>.enseal.toml</code> is present.</td></tr>
+<tr><td><code>enseal receive</code></td><td>Automatic validation after receiving a <code>.env</code> payload. Emits warnings but does not block the receive.</td></tr>
+<tr><td><code>enseal inject</code></td><td>Automatic validation before injecting secrets into the child process. Emits warnings but does not block injection.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Validation errors are specific and actionable:</p>
+<pre><code>error: missing required: JWT_SECRET
+error: DATABASE_URL doesn't match pattern ^postgres://
+error: PORT value "abc" is not an integer (expected range 1024-65535)
+error: LOG_LEVEL value "verbose" is not one of: debug, info, warn, error
+ok: 11/15 variables passed validation
+</code></pre>
+<hr>
+<h2 id="file-discovery"><a class="header" href="#file-discovery">File Discovery</a></h2>
+<p>enseal searches for <code>.enseal.toml</code> in the current working directory. You can override this with the <code>--config</code> global flag:</p>
+<pre><code class="language-bash">enseal validate .env --config /path/to/.enseal.toml
+</code></pre>
+<p>The configuration file is never required. All enseal commands work without one.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="security-model"><a class="header" href="#security-model">Security Model</a></h1>
+<p>This document describes what enseal protects against, what it does not, and how its cryptographic primitives work together.</p>
+<hr>
+<h2 id="what-enseal-protects-against"><a class="header" href="#what-enseal-protects-against">What enseal Protects Against</a></h2>
+<h3 id="secrets-in-transit"><a class="header" href="#secrets-in-transit">Secrets in Transit</a></h3>
+<p>All transfers are encrypted end-to-end. In anonymous mode, the sender and recipient establish a shared key via the SPAKE2 protocol (part of magic-wormhole). In identity mode, the payload is encrypted with the recipient’s age public key. In both modes, the relay server or any network intermediary sees only ciphertext.</p>
+<h3 id="secrets-in-chat-history"><a class="header" href="#secrets-in-chat-history">Secrets in Chat History</a></h3>
+<p>Unlike pasting secrets into Slack, email, or other messaging tools, enseal transfers are ephemeral. Wormhole codes are single-use and time-limited. There is no persistent record of the transfer on any server. Once the transfer completes, the channel is destroyed. No secret values remain in any chat log, search index, or message archive.</p>
+<h3 id="man-in-the-middle-attacks"><a class="header" href="#man-in-the-middle-attacks">Man-in-the-Middle Attacks</a></h3>
+<p>In anonymous mode, the SPAKE2 password-authenticated key exchange provides mutual authentication. Both parties derive the same session key from the wormhole code. An attacker who does not know the code cannot derive the key, even if they control the relay.</p>
+<p>In identity mode, the sender encrypts to the recipient’s known public key and signs the ciphertext with their own ed25519 key. The recipient verifies the signature against the sender’s trusted public key before decrypting. An attacker cannot forge a valid signature without the sender’s private key.</p>
+<h3 id="malicious-relay-server"><a class="header" href="#malicious-relay-server">Malicious Relay Server</a></h3>
+<p>The relay server (whether public or self-hosted) is designed to be untrusted. It functions as a dumb byte pipe that matches channels and forwards ciphertext. It never has access to plaintext, session keys, or the wormhole code. A compromised relay cannot read, modify, or selectively drop parts of a transfer without detection.</p>
+<h3 id="sender-impersonation-identity-mode"><a class="header" href="#sender-impersonation-identity-mode">Sender Impersonation (Identity Mode)</a></h3>
+<p>In identity mode, every transfer includes an ed25519 signature over the ciphertext. The recipient verifies this signature against the sender’s public key from their trusted key store. If the signature does not verify, the transfer is rejected. This prevents an attacker from sending payloads that appear to come from a trusted teammate.</p>
+<h3 id="secrets-on-disk"><a class="header" href="#secrets-on-disk">Secrets on Disk</a></h3>
+<p>The <code>enseal inject</code> command receives secrets and passes them directly as environment variables to a child process. No temporary file is written. When the child process exits, the secrets exist only in the process environment block, which is cleaned up by the operating system. This eliminates the risk of <code>.env</code> files lingering on disk, in backups, or in filesystem snapshots.</p>
+<h3 id="secrets-in-git"><a class="header" href="#secrets-in-git">Secrets in Git</a></h3>
+<p>The <code>enseal encrypt</code> command provides age-based encryption for <code>.env</code> files intended for version control. Whole-file encryption produces an opaque blob. Per-variable encryption (<code>--per-var</code>) keeps key names visible for diffing while encrypting each value individually. In either mode, plaintext secret values are never committed to the repository.</p>
+<hr>
+<h2 id="what-enseal-does-not-protect-against"><a class="header" href="#what-enseal-does-not-protect-against">What enseal Does NOT Protect Against</a></h2>
+<h3 id="compromised-endpoints"><a class="header" href="#compromised-endpoints">Compromised Endpoints</a></h3>
+<p>If a developer’s machine is compromised (malware, remote access, root-level attacker), no application-level encryption can help. The attacker can read secrets from process memory, intercept keystrokes, or access decrypted files. enseal’s threat model assumes both endpoints are trusted.</p>
+<h3 id="key-distribution"><a class="header" href="#key-distribution">Key Distribution</a></h3>
+<p>enseal uses a trust-on-first-use model for identity mode. There is no certificate authority, no keyserver, and no web of trust. When you run <code>enseal keys import</code>, you are trusting that the public key file came from the person you think it came from. enseal displays the fingerprint during import to encourage out-of-band verification (e.g., comparing fingerprints over a phone call or in person), but it cannot enforce this.</p>
+<p>If an attacker substitutes their own public key during the initial key exchange, they can intercept future identity mode transfers. Protect the key distribution channel.</p>
+<h3 id="relay-channel-front-running-identity-mode"><a class="header" href="#relay-channel-front-running-identity-mode">Relay Channel Front-Running (Identity Mode)</a></h3>
+<p>In identity mode, relay push channels are deterministic: the channel ID is derived from <code>SHA256(sender_pubkey || recipient_pubkey)</code>. Anyone who has imported the same public keys can compute the channel ID and attempt to connect.</p>
+<p>This does not expose secret content – E2E encryption ensures only the intended recipient can decrypt the payload, and ed25519 signatures ensure only the real sender can produce a valid transfer. However, a third party who knows both public keys could observe that a channel exists or attempt to deliver a payload to the channel (which the recipient would reject due to signature verification failure).</p>
+<p>For situations where channel unpredictability is important, use anonymous wormhole mode. Wormhole codes are randomly generated and single-use, making channel IDs unpredictable.</p>
+<hr>
+<h2 id="cryptographic-primitives"><a class="header" href="#cryptographic-primitives">Cryptographic Primitives</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Primitive</th><th>Library</th><th>Purpose</th></tr>
+</thead>
+<tbody>
+<tr><td>age</td><td><code>age</code> crate</td><td>Payload encryption (both modes), at-rest encryption (<code>encrypt</code>/<code>decrypt</code>). X25519 key agreement with ChaCha20-Poly1305 for authenticated encryption.</td></tr>
+<tr><td>ed25519</td><td><code>ed25519-dalek</code> crate</td><td>Digital signatures for identity mode. The sender signs the ciphertext, the recipient verifies before decrypting.</td></tr>
+<tr><td>SPAKE2</td><td><code>magic-wormhole</code> crate</td><td>Password-authenticated key exchange for anonymous mode. Derives a shared session key from the wormhole code without revealing it to the relay.</td></tr>
+</tbody>
+</table>
+</div>
+<p>age does not natively support signing. enseal uses ed25519-dalek as a separate signing layer. Each identity has two keypairs stored together: an age keypair for encryption and an ed25519 keypair for signing.</p>
+<hr>
+<h2 id="wormhole-code-entropy"><a class="header" href="#wormhole-code-entropy">Wormhole Code Entropy</a></h2>
+<p>Wormhole codes follow the format <code>NNNN-word-word</code>, where <code>NNNN</code> is a numeric channel ID and the words are drawn from the PGP wordlist.</p>
+<p>With the default of 2 words:</p>
+<ul>
+<li>Numeric prefix: approximately 9000 possible values</li>
+<li>Each word: 48 possible values (from the PGP even/odd wordlists)</li>
+<li>Total entropy: approximately <code>log2(9000 * 48 * 48)</code> = ~24 bits</li>
+</ul>
+<p>This is combined with three additional mitigations:</p>
+<ul>
+<li><strong>Single-use</strong>: Each code can only be used once. After a successful transfer, the channel is destroyed.</li>
+<li><strong>Time-limited</strong>: Channels expire after 5 minutes (configurable with <code>--timeout</code>).</li>
+<li><strong>Rate limiting</strong>: The relay server limits connection attempts to prevent brute-force guessing.</li>
+</ul>
+<p>Together, 24 bits of entropy with single-use, time-limited channels and rate limiting provides adequate protection for the intended threat model. For higher-security contexts, increase the word count with <code>--words 4</code> (approximately 46 bits) or <code>--words 5</code> (approximately 52 bits).</p>
+<hr>
+<h2 id="envelope-integrity"><a class="header" href="#envelope-integrity">Envelope Integrity</a></h2>
+<p>Every transfer envelope includes a <code>sha256</code> field containing the SHA-256 hash of the plaintext payload, computed before encryption. After decryption, the recipient recomputes the hash and compares it to the value in the envelope. If the hashes do not match, the transfer is rejected.</p>
+<p>This provides integrity verification independent of the encryption layer, catching any corruption that might occur during transit or storage.</p>
+<hr>
+<h2 id="replay-protection"><a class="header" href="#replay-protection">Replay Protection</a></h2>
+<p>Transfer envelopes include a <code>created_at</code> timestamp set by the sender. On receive, enseal checks this timestamp and rejects envelopes older than 5 minutes. This prevents an attacker from capturing and replaying a valid encrypted transfer at a later time.</p>
+<p>The combination of timestamp checking and single-use wormhole channels (in anonymous mode) or signature verification (in identity mode) provides defense-in-depth against replay attacks.</p>
+<hr>
+<h2 id="private-key-storage"><a class="header" href="#private-key-storage">Private Key Storage</a></h2>
+<p>Private keys are stored at <code>~/.config/enseal/keys/</code> with restrictive file permissions:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>File</th><th>Permissions</th><th>Contents</th></tr>
+</thead>
+<tbody>
+<tr><td><code>self.age.key</code></td><td><code>0600</code></td><td>age private key (encryption)</td></tr>
+<tr><td><code>self.sign.key</code></td><td><code>0600</code></td><td>ed25519 private key (signing)</td></tr>
+<tr><td><code>self.age.pub</code></td><td><code>0644</code></td><td>age public key</td></tr>
+<tr><td><code>self.sign.pub</code></td><td><code>0644</code></td><td>ed25519 public key</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>enseal keys init</code> sets <code>0600</code> permissions on private key files at creation time. enseal checks permissions on startup and warns if private key files are more permissive than <code>0600</code>.</p>
+<hr>
+<h2 id="shell-history-warning"><a class="header" href="#shell-history-warning">Shell History Warning</a></h2>
+<p>The <code>--secret</code> flag passes a secret value as a command-line argument, which means it appears in shell history (<code>~/.bash_history</code>, <code>~/.zsh_history</code>), process listings (<code>ps</code>), and potentially system audit logs.</p>
+<p>Every use of <code>--secret</code> emits a warning to stderr:</p>
+<pre><code>warning: --secret puts the value in shell history. Consider piping instead: echo "..." | enseal share
+</code></pre>
+<p>This warning is suppressed by <code>--quiet</code>. For sensitive values, piping is the recommended approach:</p>
+<pre><code class="language-bash"># Secret does not appear in shell history
+pass show stripe/key | enseal share --label "Stripe"
+echo -n "token" | enseal share
+
+# Secret IS visible in shell history and ps output
+enseal share --secret "sk_live_abc123"
+</code></pre>
+<hr>
+<h2 id="summary-table"><a class="header" href="#summary-table">Summary Table</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Threat</th><th>Protected</th><th>Mechanism</th></tr>
+</thead>
+<tbody>
+<tr><td>Network eavesdropping</td><td>Yes</td><td>E2E encryption (age / SPAKE2)</td></tr>
+<tr><td>Secrets in chat history</td><td>Yes</td><td>Ephemeral single-use channels</td></tr>
+<tr><td>Man-in-the-middle</td><td>Yes</td><td>SPAKE2 (anonymous), public key auth (identity)</td></tr>
+<tr><td>Malicious relay</td><td>Yes</td><td>Relay sees only ciphertext</td></tr>
+<tr><td>Sender impersonation</td><td>Yes</td><td>ed25519 signatures (identity mode)</td></tr>
+<tr><td>Secrets on disk</td><td>Yes</td><td><code>inject</code> mode (no file written)</td></tr>
+<tr><td>Secrets in git</td><td>Yes</td><td><code>encrypt</code> command (age encryption)</td></tr>
+<tr><td>Compromised endpoint</td><td>No</td><td>Out of scope – application-level encryption cannot help</td></tr>
+<tr><td>Key distribution attack</td><td>No</td><td>Trust-on-first-use, no PKI</td></tr>
+<tr><td>Channel front-running</td><td>Partial</td><td>E2E encryption protects content; use wormhole mode for unpredictable channels</td></tr>
+</tbody>
+</table>
+</div>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="key-management"><a class="header" href="#key-management">Key Management</a></h1>
+<p>enseal’s identity mode uses two keypairs per user: an age keypair for encryption and an ed25519 keypair for signing. This page covers key generation, storage, import/export, aliases, groups, and the trust model.</p>
+<hr>
+<h2 id="key-storage-location"><a class="header" href="#key-storage-location">Key Storage Location</a></h2>
+<p>All keys and configuration live under <code>~/.config/enseal/keys/</code>. This follows the XDG Base Directory specification on Linux and the equivalent standard path on macOS.</p>
+<pre><code>~/.config/enseal/
+  keys/
+    self.age.key            # age private key (encryption) -- permissions 0600
+    self.age.pub            # age public key
+    self.sign.key           # ed25519 private key (signing) -- permissions 0600
+    self.sign.pub           # ed25519 public key
+    trusted/
+      alex@company.com.pub    # imported public key bundle
+      sarah@company.com.pub   # imported public key bundle
+  aliases.toml              # nickname -&gt; identity mapping
+  groups.toml               # named groups of identities
+  config.toml               # optional global defaults
+</code></pre>
+<p>Private key files (<code>self.age.key</code>, <code>self.sign.key</code>) are created with <code>0600</code> permissions. enseal warns on startup if these files have more permissive access.</p>
+<hr>
+<h2 id="commands"><a class="header" href="#commands">Commands</a></h2>
+<h3 id="enseal-keys-init-1"><a class="header" href="#enseal-keys-init-1"><code>enseal keys init</code></a></h3>
+<p>Generate your keypair. This creates four files: an age keypair (for encryption/decryption) and an ed25519 keypair (for signing/verification).</p>
+<pre><code class="language-bash">$ enseal keys init
+ok: keypair generated
+  fingerprint: SHA256:a1b2c3d4e5f6...
+  keys stored in: ~/.config/enseal/keys/
+</code></pre>
+<p>If keys already exist, the command exits with an error to prevent accidental overwriting. To regenerate, remove the existing keys first with <code>rm ~/.config/enseal/keys/self.*</code>.</p>
+<hr>
+<h3 id="enseal-keys-export"><a class="header" href="#enseal-keys-export"><code>enseal keys export</code></a></h3>
+<p>Print your public key bundle to stdout. This is the file you share with teammates so they can encrypt secrets to you and verify your signatures.</p>
+<pre><code class="language-bash">$ enseal keys export
+# enseal public key for this machine
+# fingerprint: SHA256:a1b2c3d4e5f6...
+age: age1qyqszqgpqyqszqgpqyqszqgpqyqszqgpqyqs...
+sign: ed25519:b64encodedpubkey...
+</code></pre>
+<p>Redirect to a file to share:</p>
+<pre><code class="language-bash">enseal keys export &gt; alex.pub
+</code></pre>
+<p>The <code>--armor</code> flag produces base64-armored output suitable for pasting into messages.</p>
+<hr>
+<h3 id="enseal-keys-import-file-1"><a class="header" href="#enseal-keys-import-file-1"><code>enseal keys import &lt;file&gt;</code></a></h3>
+<p>Import a colleague’s public key. enseal reads the public key bundle, displays the identity and fingerprint, and prompts for confirmation before adding it to the trusted store.</p>
+<pre><code class="language-bash">$ enseal keys import alex.pub
+  Identity:     alex@company.com
+  Fingerprint:  SHA256:a1b2c3d4e5f6...
+  Trust this key? (y/N): y
+ok: imported alex@company.com
+</code></pre>
+<p>The confirmation prompt encourages you to verify the fingerprint out-of-band (e.g., comparing over a phone call, in person, or through a trusted channel) before trusting the key.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Flag</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--yes</code></td><td>Skip the confirmation prompt. Useful for scripted or automated workflows.</td></tr>
+</tbody>
+</table>
+</div>
+<pre><code class="language-bash">enseal keys import alex.pub --yes
+</code></pre>
+<p>The imported key is stored as <code>~/.config/enseal/keys/trusted/&lt;identity&gt;.pub</code>.</p>
+<hr>
+<h3 id="enseal-keys-list-1"><a class="header" href="#enseal-keys-list-1"><code>enseal keys list</code></a></h3>
+<p>Display all trusted keys, their fingerprints, and any associated aliases.</p>
+<pre><code class="language-bash">$ enseal keys list
+  Your key:
+    Fingerprint: SHA256:a1b2c3d4e5f6...
+
+  Trusted keys:
+    alex@company.com    SHA256:f6e5d4c3b2a1...  (alias: alex)
+    sarah@company.com   SHA256:1a2b3c4d5e6f...  (alias: sarah)
+    mike@company.com    SHA256:6f5e4d3c2b1a...
+</code></pre>
+<hr>
+<h3 id="enseal-keys-remove-identity-1"><a class="header" href="#enseal-keys-remove-identity-1"><code>enseal keys remove &lt;identity&gt;</code></a></h3>
+<p>Remove a trusted key from the local store by identity name.</p>
+<pre><code class="language-bash">$ enseal keys remove alex@company.com
+ok: removed alex@company.com
+</code></pre>
+<p>This deletes the public key file from <code>~/.config/enseal/keys/trusted/</code> and removes any associated aliases from <code>aliases.toml</code>. It does not affect groups – remove the identity from groups separately if needed.</p>
+<hr>
+<h3 id="enseal-keys-fingerprint-1"><a class="header" href="#enseal-keys-fingerprint-1"><code>enseal keys fingerprint</code></a></h3>
+<p>Display your own key fingerprint. Use this for out-of-band verification: read the fingerprint to a colleague over a phone call, or compare it in person after they import your public key.</p>
+<pre><code class="language-bash">$ enseal keys fingerprint
+SHA256:a1b2c3d4e5f6...
+</code></pre>
+<hr>
+<h3 id="enseal-keys-alias-name-identity-1"><a class="header" href="#enseal-keys-alias-name-identity-1"><code>enseal keys alias &lt;name&gt; &lt;identity&gt;</code></a></h3>
+<p>Map a short nickname to a full identity string. Aliases can be used anywhere enseal expects an identity: <code>--to</code>, group membership, and so on.</p>
+<pre><code class="language-bash">$ enseal keys alias sarah sarah@company.com
+ok: alias 'sarah' -&gt; sarah@company.com
+
+$ enseal share .env --to sarah
+# equivalent to: enseal share .env --to sarah@company.com
+</code></pre>
+<p>Aliases are stored in <code>~/.config/enseal/aliases.toml</code>:</p>
+<pre><code class="language-toml">sarah = "sarah@company.com"
+alex = "alex@company.com"
+mike = "mike.chen@company.com"
+</code></pre>
+<hr>
+<h3 id="groups-1"><a class="header" href="#groups-1">Groups</a></h3>
+<p>Groups let you encrypt a payload to multiple recipients at once. Any member of the group can decrypt the payload independently.</p>
+<h4 id="enseal-keys-group-create-name-1"><a class="header" href="#enseal-keys-group-create-name-1"><code>enseal keys group create &lt;name&gt;</code></a></h4>
+<p>Create a new named group.</p>
+<pre><code class="language-bash">$ enseal keys group create backend-team
+ok: created group 'backend-team'
+</code></pre>
+<h4 id="enseal-keys-group-add-group-identity-1"><a class="header" href="#enseal-keys-group-add-group-identity-1"><code>enseal keys group add &lt;group&gt; &lt;identity&gt;</code></a></h4>
+<p>Add an identity to an existing group.</p>
+<pre><code class="language-bash">$ enseal keys group add backend-team sarah@company.com
+ok: added sarah@company.com to 'backend-team'
+
+$ enseal keys group add backend-team alex@company.com
+ok: added alex@company.com to 'backend-team'
+</code></pre>
+<h4 id="enseal-keys-group-remove-group-identity-1"><a class="header" href="#enseal-keys-group-remove-group-identity-1"><code>enseal keys group remove &lt;group&gt; &lt;identity&gt;</code></a></h4>
+<p>Remove an identity from a group.</p>
+<pre><code class="language-bash">$ enseal keys group remove backend-team alex@company.com
+ok: removed alex@company.com from 'backend-team'
+</code></pre>
+<h4 id="enseal-keys-group-list-name-1"><a class="header" href="#enseal-keys-group-list-name-1"><code>enseal keys group list [name]</code></a></h4>
+<p>Without arguments, list all groups. With a group name, list its members.</p>
+<pre><code class="language-bash">$ enseal keys group list
+  backend-team  (3 members)
+  devops        (2 members)
+
+$ enseal keys group list backend-team
+  backend-team:
+    sarah@company.com   (alias: sarah)
+    alex@company.com    (alias: alex)
+    mike@company.com
+</code></pre>
+<h4 id="enseal-keys-group-delete-name-1"><a class="header" href="#enseal-keys-group-delete-name-1"><code>enseal keys group delete &lt;name&gt;</code></a></h4>
+<p>Delete a group entirely. Does not remove the member keys from the trusted store.</p>
+<pre><code class="language-bash">$ enseal keys group delete backend-team
+ok: deleted group 'backend-team'
+</code></pre>
+<p>Groups are stored in <code>~/.config/enseal/groups.toml</code>:</p>
+<pre><code class="language-toml">[backend-team]
+members = ["sarah@company.com", "alex@company.com", "mike@company.com"]
+
+[devops]
+members = ["alex@company.com", "deploy@company.com"]
+</code></pre>
+<p>Use a group name with <code>--to</code> to encrypt to all members:</p>
+<pre><code class="language-bash">enseal share .env --to backend-team
+</code></pre>
+<p>This creates a multi-recipient age encryption. Any member of the group can decrypt independently with their own private key.</p>
+<hr>
+<h2 id="public-key-file-format"><a class="header" href="#public-key-file-format">Public Key File Format</a></h2>
+<p>Public key files are plain text, human-readable, and suitable for pasting into a Slack message, committing to a shared repository, or attaching to an email.</p>
+<pre><code># enseal public key for alex@company.com
+# fingerprint: SHA256:a1b2c3d4e5f6...
+age: age1qyqszqgpqyqszqgpqyqszqgpqyqszqgpqyqs...
+sign: ed25519:b64encodedpubkey...
+</code></pre>
+<p>The file contains:</p>
+<ul>
+<li><strong>Comment lines</strong> (starting with <code>#</code>): identity name and fingerprint for human reference.</li>
+<li><strong><code>age:</code> line</strong>: the age X25519 public key used for encryption.</li>
+<li><strong><code>sign:</code> line</strong>: the ed25519 public key used for signature verification, base64-encoded.</li>
+</ul>
+<p>The identity (email or name) appears in the filename and comment, but is not cryptographically bound to the key. Trust is based on how you obtained the file, not on any certificate chain.</p>
+<hr>
+<h2 id="trust-model"><a class="header" href="#trust-model">Trust Model</a></h2>
+<p>enseal uses a straightforward trust-on-first-use model with no central authority:</p>
+<ul>
+<li>There is no certificate authority, keyserver, or web of trust.</li>
+<li>You trust a key by explicitly importing it with <code>enseal keys import</code>.</li>
+<li>The import process shows the fingerprint to encourage out-of-band verification.</li>
+<li>Once imported, the key is trusted for all future identity mode operations.</li>
+<li>There is no automatic key discovery or key update mechanism.</li>
+</ul>
+<p><strong>Recommended practices:</strong></p>
+<ul>
+<li>Verify fingerprints out-of-band before trusting a key. Compare the fingerprint shown during import with the one the key owner reads to you over a phone call, video call, or in person.</li>
+<li>For teams, consider committing public keys to a shared repository. Team members can import keys from the repo, and the git history provides an audit trail of key additions and removals.</li>
+<li>Periodically run <code>enseal keys list</code> to review which keys you trust.</li>
+<li>Remove keys for people who leave the team with <code>enseal keys remove</code>.</li>
+</ul>
+<p><strong>What trust means in practice:</strong></p>
+<p>When you run <code>enseal share .env --to alex</code>, enseal:</p>
+<ol>
+<li>Looks up <code>alex</code> in aliases (resolves to <code>alex@company.com</code>).</li>
+<li>Loads <code>alex@company.com.pub</code> from the trusted key store.</li>
+<li>Encrypts the payload with the age public key from that file.</li>
+<li>Signs the ciphertext with your ed25519 private key.</li>
+</ol>
+<p>When Alex runs <code>enseal receive</code>:</p>
+<ol>
+<li>The envelope includes your ed25519 public key.</li>
+<li>Alex’s enseal checks whether your public key is in their trusted store.</li>
+<li>If trusted, it verifies your signature over the ciphertext.</li>
+<li>If the signature is valid, it decrypts with Alex’s age private key.</li>
+<li>If your key is not trusted, enseal warns Alex and prompts before proceeding.</li>
+</ol>
+<p>The security of this system depends entirely on the integrity of the initial key exchange. If an attacker substitutes their own public key during import, they can intercept future transfers. This is why out-of-band fingerprint verification matters.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="search-1"><a class="header" href="#search-2">Search</a></h1>
+<div id="search-2"></div>
+
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="theme/pagefind-ui-5c06ec0e.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>
