@@ -55,7 +55,7 @@ The server exposes `GET /health` which returns JSON:
 {
   "status": "ok",
   "service": "enseal-relay",
-  "version": "0.10.0"
+  "version": "0.11.0"
 }
 ```
 

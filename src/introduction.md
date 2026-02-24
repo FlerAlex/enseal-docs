@@ -9,7 +9,7 @@ Stop pasting secrets into Slack. `enseal` makes the secure path faster than the 
 $ enseal share .env
   Share code:  7-guitarist-revenge
   Secrets:     14 variables (staging)
-  Expires:     5 minutes or first receive
+  Expires:     on first receive
 
 # recipient
 $ enseal receive 7-guitarist-revenge

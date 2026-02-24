@@ -72,7 +72,7 @@ enseal --version
 You should see output like:
 
 ```
-enseal 0.6.0
+enseal 0.11.0
 ```
 
 If the command is not found, verify that the installation directory is on your `PATH`.

@@ -85,7 +85,7 @@ With the default of 2 words:
 This is combined with three additional mitigations:
 
 - **Single-use**: Each code can only be used once. After a successful transfer, the channel is destroyed.
-- **Time-limited**: Channels expire after 5 minutes (configurable with `--timeout`).
+- **Time-limited**: Channels expire after 5 minutes.
 - **Rate limiting**: The relay server limits connection attempts to prevent brute-force guessing.
 
 Together, 24 bits of entropy with single-use, time-limited channels and rate limiting provides adequate protection for the intended threat model. For higher-security contexts, increase the word count with `--words 4` (approximately 46 bits) or `--words 5` (approximately 52 bits).

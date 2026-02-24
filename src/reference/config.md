@@ -15,13 +15,12 @@ Override default values for common flags. These are applied when the correspondi
 | Key | Type | Description |
 |-----|------|-------------|
 | `relay` | string | Default relay URL. Equivalent to `--relay` or `ENSEAL_RELAY`. |
-| `timeout` | integer | Channel expiry in seconds (default: 300). |
+
 | `words` | integer | Number of wormhole code words (default: 2, range: 2-5). |
 
 ```toml
 [defaults]
 relay = "wss://relay.internal.company.com:4443"
-timeout = 600
 words = 3
 ```
 
@@ -144,7 +143,6 @@ A complete `.enseal.toml` demonstrating all sections:
 ```toml
 [defaults]
 relay = "wss://relay.internal.company.com:4443"
-timeout = 600
 words = 3
 
 [filter]
@@ -220,10 +218,6 @@ ok: 11/15 variables passed validation
 
 ## File Discovery
 
-enseal searches for `.enseal.toml` in the current working directory. You can override this with the `--config` global flag:
-
-```bash
-enseal validate .env --config /path/to/.enseal.toml
-```
+enseal searches for `.enseal.toml` in the current working directory.
 
 The configuration file is never required. All enseal commands work without one.

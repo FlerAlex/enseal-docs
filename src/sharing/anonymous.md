@@ -172,7 +172,7 @@ $ enseal share .env --no-filter
   from the code. A wrong code produces a clean failure, not a partial transfer.
 - **End-to-end encryption.** The relay server sees only ciphertext.
 - **Single-use channels.** A code cannot be reused after a successful transfer.
-- **Time-limited.** Channels expire after the configured timeout (default: 5
-  minutes). Adjust with `--timeout`.
+- **Time-limited.** Channels expire after the server's configured TTL (default:
+  5 minutes on the public relay).
 - **No persistent state.** Nothing is stored on the relay after the transfer
   completes or the channel expires.

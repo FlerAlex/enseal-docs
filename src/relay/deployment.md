@@ -225,7 +225,7 @@ curl -s https://relay.example.com/health | jq .
 {
   "status": "ok",
   "service": "enseal-relay",
-  "version": "0.10.0"
+  "version": "0.11.0"
 }
 ```
 

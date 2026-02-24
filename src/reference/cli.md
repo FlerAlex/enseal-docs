@@ -10,7 +10,7 @@ These flags are available on all commands.
 |------|-------------|
 | `--verbose`, `-v` | Show debug output. Shows variable names but never secret values. |
 | `--quiet`, `-q` | Minimal output, suitable for scripting. Suppresses warnings. |
-| `--config <path>` | Path to `.enseal.toml` manifest file. Defaults to `.enseal.toml` in the current directory. |
+
 
 ---
 
@@ -42,7 +42,7 @@ Input is selected by priority:
 | `--no-filter` | Send the raw file contents without `.env` parsing or filtering. |
 | `--no-interpolate` | Do not resolve `${VAR}` references before sending. Sends raw interpolation syntax as-is. |
 | `--words <n>` | Number of words in the wormhole code (default: 2, range: 2-5). More words increase entropy. Anonymous mode only. |
-| `--timeout <seconds>` | Channel expiry time in seconds (default: 300). |
+
 | `--quiet`, `-q` | Suppress warnings (including the `--secret` shell history warning). |
 
 **Examples:**

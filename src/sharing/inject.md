@@ -150,11 +150,11 @@ $ enseal inject 4-orbital-hammock -- psql "$DATABASE_URL"
 
 ## Combining with Other Flags
 
-Inject respects the same relay and timeout flags as other commands:
+Inject respects the same relay flags as other commands:
 
 ```bash
-# Use a self-hosted relay with a longer timeout
-$ enseal inject --relay wss://relay.internal:4443 --timeout 600 \
+# Use a self-hosted relay
+$ enseal inject --relay wss://relay.internal:4443 \
     7-guitarist-revenge -- npm start
 
 # Verbose mode shows variable names (never values)
