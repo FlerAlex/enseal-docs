@@ -165,7 +165,49 @@ $ enseal share .env --include "^DB_|^DATABASE_"
 $ enseal share .env --no-filter
 ```
 
+## Using a Private Relay
+
+By default, anonymous mode routes through the public magic-wormhole rendezvous
+server. When you pass `--relay`, enseal switches to a different transport: your
+private enseal relay server.
+
+```bash
+# Sender
+$ enseal share .env --relay ws://relay.internal:4443
+info:  Secrets:   14 variables
+info:  Share code: 3421-amber-frost
+info:  Expires:    on first receive
+ok:    sent
+
+# Receiver (must specify the same relay)
+$ enseal receive 3421-amber-frost --relay ws://relay.internal:4443
+ok:    14 secrets written to .env
+```
+
+The channel code is a randomly generated enseal code (`NNNN-word-word`), not a
+wormhole code. The receiver must also provide `--relay` pointing to the same
+server, or have it set in `.enseal.toml` or `ENSEAL_RELAY`.
+
+This works for piped input and inline secrets too:
+
+```bash
+$ echo "my-api-token" | enseal share --label "API key" --relay ws://relay.internal:4443
+info:  Label:     API key
+info:  Share code: 7842-marble-frost
+info:  Expires:    on first receive
+ok:    sent
+```
+
+If you have a relay URL set in `.enseal.toml` or `ENSEAL_RELAY`, `--relay` is
+not needed on the command line — it is picked up automatically.
+
+Note: `enseal serve` speaks plain WebSocket (`ws://`). For TLS, place a reverse
+proxy (Caddy, nginx) in front and connect clients with `wss://`. See
+[Deployment Options](../relay/deployment.md) for details.
+
 ## Security Properties
+
+**In wormhole mode (default, no `--relay`):**
 
 - **No accounts or keys required.** The wormhole code is the only credential.
 - **Mutual authentication.** SPAKE2 ensures both parties derived the same key
@@ -176,3 +218,13 @@ $ enseal share .env --no-filter
   5 minutes on the public relay).
 - **No persistent state.** Nothing is stored on the relay after the transfer
   completes or the channel expires.
+
+**In private relay mode (`--relay`):**
+
+- **No accounts or keys required.** The channel code is the only credential.
+- **End-to-end encryption.** The relay sees only ciphertext.
+- **Single-use channels.** The channel is consumed on first receive.
+- **No SPAKE2 authentication.** Unlike wormhole mode, anonymous relay transfers
+  do not perform mutual key agreement. An attacker who intercepts the code and
+  reaches the relay first can receive the payload. Use identity mode (`--to`)
+  for authenticated transfers over a relay.

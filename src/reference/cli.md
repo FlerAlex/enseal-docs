@@ -35,13 +35,13 @@ Input is selected by priority:
 | `--secret <value>` | Inline secret. Can be a raw string or `KEY=VALUE` pair. Puts the value in shell history -- prefer piping for sensitive values. |
 | `--label <name>` | Human-readable label for raw or piped secrets (e.g., `"Stripe API key"`). Shown to the recipient on receive. |
 | `--as <KEY>` | Wrap a raw string as `KEY=<value>` so the recipient gets a `.env`-compatible line. |
-| `--relay <url>` | Use a specific relay server instead of the public relay. Also configurable via `ENSEAL_RELAY` env var. |
+| `--relay <url>` | Route through a specific relay server. In anonymous mode, bypasses magic-wormhole and uses the enseal relay transport (generates a channel code). In identity mode, pushes to the recipient's channel. Also configurable via `ENSEAL_RELAY` env var. |
 | `--env <profile>` | Environment profile. Resolves to `.env.<profile>` in the current directory (e.g., `--env staging` reads `.env.staging`). |
 | `--exclude <pattern>` | Regex pattern to exclude matching variable names before sending (e.g., `"^PUBLIC_"`). Only applies to `.env` file input. |
 | `--include <pattern>` | Regex pattern to include only matching variable names. Only applies to `.env` file input. |
 | `--no-filter` | Send the raw file contents without `.env` parsing or filtering. |
 | `--no-interpolate` | Do not resolve `${VAR}` references before sending. Sends raw interpolation syntax as-is. |
-| `--words <n>` | Number of words in the wormhole code (default: 2, range: 2-5). More words increase entropy. Anonymous mode only. |
+| `--words <n>` | Number of words in the wormhole code (range: 2-5, default: 2). More words increase entropy. Applies only in anonymous wormhole mode (no `--relay`). |
 
 | `--quiet`, `-q` | Suppress warnings (including the `--secret` shell history warning). |
 
@@ -75,7 +75,10 @@ echo -n "sk_live_abc123" | enseal share --as STRIPE_KEY
 # Exclude public variables before sending
 enseal share .env --exclude "^NEXT_PUBLIC_"
 
-# Use a self-hosted relay
+# Use a self-hosted relay (anonymous mode: uses enseal relay transport, not wormhole)
+enseal share .env --relay ws://relay.internal:4443
+
+# Use a self-hosted relay with TLS (via reverse proxy)
 enseal share .env --relay wss://relay.internal:4443
 ```
 
@@ -99,13 +102,13 @@ Output adapts to the payload format:
 | `--clipboard` | Copy the received value to the system clipboard instead of writing to stdout or a file. |
 | `--no-write` | Print to stdout even for `.env` payloads. Does not write any file. |
 | `--force` | Overwrite the output file if it already exists without prompting. |
-| `--relay <url>` | Use a specific relay server. Also configurable via `ENSEAL_RELAY` env var. |
+| `--relay <url>` | Route through a specific relay server. When set, receives from the enseal relay using the provided code instead of magic-wormhole. Must match the relay used by the sender. Also configurable via `ENSEAL_RELAY` env var. |
 | `--quiet`, `-q` | Minimal output. |
 
 **Examples:**
 
 ```bash
-# Receive using a wormhole code
+# Receive using a wormhole code (default, no relay)
 enseal receive 7-guitarist-revenge
 
 # Write to a specific file

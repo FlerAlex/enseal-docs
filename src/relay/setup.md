@@ -71,25 +71,40 @@ This attempts a TCP connection to the configured address and port and reports wh
 
 Clients point to the relay with the `--relay` flag or the `ENSEAL_RELAY` environment variable.
 
-### Per-command flag
+When `--relay` is set, enseal uses the enseal relay transport for **all modes**: anonymous share, anonymous receive, identity push, and identity listen. The relay URL is never passed to magic-wormhole.
+
+### Anonymous mode
+
+When `--relay` is set in anonymous mode, enseal generates an enseal-style channel code and routes the transfer through your relay instead of the public wormhole server:
 
 ```bash
 # sender
-enseal share .env --relay wss://relay.internal:4443
+enseal share .env --relay ws://relay.internal:4443
+# info:  Share code: 3421-amber-frost
 
-# receiver
-enseal receive 7-guitarist-revenge --relay wss://relay.internal:4443
+# receiver (must use the same relay)
+enseal receive 3421-amber-frost --relay ws://relay.internal:4443
 ```
 
-Both sides must use the same relay URL.
+Both sides must point to the same relay URL.
+
+### Identity mode
+
+```bash
+# sender pushes to recipient's deterministic channel (no code needed)
+enseal share .env --to alex@company.com --relay ws://relay.internal:4443
+
+# recipient listens on their channel
+enseal inject --listen --relay ws://relay.internal:4443 -- npm start
+```
 
 ### Environment variable
 
 ```bash
-export ENSEAL_RELAY=wss://relay.internal:4443
+export ENSEAL_RELAY=ws://relay.internal:4443
 
 enseal share .env
-enseal receive 7-guitarist-revenge
+enseal receive 3421-amber-frost
 ```
 
 ### Project configuration
@@ -98,10 +113,14 @@ Set the relay in `.enseal.toml` so every team member uses the same server withou
 
 ```toml
 [defaults]
-relay = "wss://relay.internal:4443"
+relay = "ws://relay.internal:4443"
 ```
 
-When a relay is configured in `.enseal.toml`, all `share` and `receive` commands in that project directory use it automatically. The `--relay` flag and `ENSEAL_RELAY` variable override the config file.
+When a relay is configured in `.enseal.toml`, all `share`, `receive`, and `inject` commands in that project directory use it automatically. The `--relay` flag and `ENSEAL_RELAY` variable override the config file.
+
+### TLS
+
+`enseal serve` speaks plain WebSocket. Connect directly with `ws://` on a trusted private network. For production or internet-facing deployments, place a TLS-terminating reverse proxy (Caddy, nginx, cloud load balancer) in front of the relay and connect clients with `wss://`. See [Deployment Options](deployment.md) for details.
 
 ## Precedence order
 
