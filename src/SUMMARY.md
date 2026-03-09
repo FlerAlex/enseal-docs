@@ -10,6 +10,7 @@
 # Sharing Secrets
 
 - [Anonymous Mode (Wormhole)](./sharing/anonymous.md)
+- [Async Upload (burnurl.dev)](./sharing/upload.md)
 - [Identity Mode (Public Key)](./sharing/identity.md)
 - [Inject into Process](./sharing/inject.md)
 - [File Drop](./sharing/filedrop.md)

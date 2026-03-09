@@ -228,3 +228,18 @@ proxy (Caddy, nginx) in front and connect clients with `wss://`. See
   do not perform mutual key agreement. An attacker who intercepts the code and
   reaches the relay first can receive the payload. Use identity mode (`--to`)
   for authenticated transfers over a relay.
+
+## Async Delivery Without a Code
+
+Both wormhole and relay modes require the recipient to be available at the same time. If
+you need to share asynchronously, or the recipient does not have enseal installed, use
+`--upload` to post to [burnurl.dev](https://burnurl.dev) instead:
+
+```bash
+enseal share .env --upload
+#   Secret URL:  https://burnurl.dev/s/a3f9c2e1...
+#   Expires:     2026-03-08 19:42:00 UTC (24h)
+#   Reads:       1 (self-destructs on first open)
+```
+
+See [Async Upload](./upload.md) for full details.

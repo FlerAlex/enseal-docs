@@ -18,7 +18,7 @@ These flags are available on all commands.
 
 ### `enseal share [<file>]`
 
-Send a `.env` file, piped input, or inline secret. In anonymous mode (default), generates a wormhole code for the recipient. In identity mode (`--to`), encrypts to a specific recipient's public key.
+Send a `.env` file, piped input, or inline secret. In anonymous mode (default), generates a wormhole code for the recipient. In identity mode (`--to`), encrypts to a specific recipient's public key. With `--upload`, posts to burnurl.dev and returns a self-destruct URL.
 
 Input is selected by priority:
 
@@ -32,6 +32,9 @@ Input is selected by priority:
 |------|-------------|
 | `--to <identity>` | Identity mode: encrypt to a named recipient, alias, or group. Without this flag, anonymous wormhole mode is used. |
 | `--output <dir>` | File drop (identity mode only): write an encrypted file to the specified directory instead of transferring over the network. |
+| `--upload` | Post the payload to burnurl.dev and return a self-destructing URL. The recipient opens it in a browser — no enseal install required. Incompatible with `--to` and `--output`. |
+| `--ttl <hours>` | TTL in hours for `--upload` (range: 1-24, default: 24). |
+| `--passphrase` | Encrypt the payload client-side with a scrypt passphrase before uploading. Prompts interactively. The server never sees plaintext. Requires `--upload`. |
 | `--secret <value>` | Inline secret. Can be a raw string or `KEY=VALUE` pair. Puts the value in shell history -- prefer piping for sensitive values. |
 | `--label <name>` | Human-readable label for raw or piped secrets (e.g., `"Stripe API key"`). Shown to the recipient on receive. |
 | `--as <KEY>` | Wrap a raw string as `KEY=<value>` so the recipient gets a `.env`-compatible line. |
@@ -42,7 +45,6 @@ Input is selected by priority:
 | `--no-filter` | Send the raw file contents without `.env` parsing or filtering. |
 | `--no-interpolate` | Do not resolve `${VAR}` references before sending. Sends raw interpolation syntax as-is. |
 | `--words <n>` | Number of words in the wormhole code (range: 2-5, default: 2). More words increase entropy. Applies only in anonymous wormhole mode (no `--relay`). |
-
 | `--quiet`, `-q` | Suppress warnings (including the `--secret` shell history warning). |
 
 **Examples:**
@@ -53,6 +55,15 @@ enseal share .env
 
 # Share with more wormhole code words for higher security
 enseal share .env --words 4
+
+# Async upload to burnurl.dev (recipient opens URL in browser, no CLI needed)
+enseal share .env --upload
+
+# Upload with 4-hour TTL
+enseal share .env --upload --ttl 4
+
+# Upload with client-side passphrase encryption (server never sees plaintext)
+enseal share .env --upload --passphrase
 
 # Share to a specific recipient (identity mode)
 enseal share .env --to sarah
@@ -471,3 +482,5 @@ enseal decrypt .env.per-var
 | Variable | Description |
 |----------|-------------|
 | `ENSEAL_RELAY` | Default relay server URL. Equivalent to `--relay`. |
+| `BURNURL_URL` | Override the burnurl.dev base URL for `--upload`. Use for self-hosted burnurl instances or local development (e.g., `http://localhost:8765`). |
+| `BURNURL_API_KEY` | API key for burnurl.dev. Required — API access is not available on the free tier. Sent as a Bearer token. |
